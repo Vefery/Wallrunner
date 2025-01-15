@@ -19,7 +19,13 @@ MonoBehaviour:
     m_Address: Assets/Prefabs/ShortPart.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
-    - LevelPartsBases
+    - BaseLevelParts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: edcfdb802a3f97b4c9b4e37f8f4d8124
+    m_Address: Assets/Prefabs/LongPart.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BaseLevelParts
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}

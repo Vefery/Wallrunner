@@ -7,6 +7,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class LevelManager : MonoBehaviour
 {
     public Transform playerStartingPosition;
+    public Transform levelPartBufferPosition;
     public float levelPartDistanceLimit;
     public float levelSpeed;
     public bool isLevelPaused = true;
@@ -14,6 +15,7 @@ public class LevelManager : MonoBehaviour
     private float firstPartHalfLength;
     private List<LevelPart> activeLevelParts = new();
     private IList<GameObject> levelPartPrefabs;
+    private LevelPart upcomingPart;
     private GameObject RandomPartPrefab { get => levelPartPrefabs[Random.Range(0, levelPartPrefabs.Count)]; }
 
     private void Awake()
@@ -30,12 +32,15 @@ public class LevelManager : MonoBehaviour
     }
     private void Update()
     {
-        foreach (LevelPart part in activeLevelParts)
+        if (!isLevelPaused)
         {
-            part.transform.Translate(levelSpeed * Time.deltaTime * -Vector3.forward, Space.Self);
+            foreach (LevelPart part in activeLevelParts)
+            {
+                part.transform.Translate(levelSpeed * Time.deltaTime * -Vector3.forward, Space.Self);
+            }
+            if (activeLevelParts[0].transform.localPosition.z < -(firstPartHalfLength + levelPartDistanceLimit))
+                UpdateLevelParts();
         }
-        if (activeLevelParts[0].transform.localPosition.z < -(firstPartHalfLength + levelPartDistanceLimit))
-            UpdateLevelParts();
     }
     private void UpdateLevelParts()
     {
@@ -43,10 +48,10 @@ public class LevelManager : MonoBehaviour
         float lastHalfLength = lastPart.halfLength;
         Destroy(activeLevelParts[0].gameObject);
         activeLevelParts.RemoveAt(0);
-        LevelPart newPiece = Instantiate(RandomPartPrefab, lastPart.transform.position, Quaternion.identity, transform).GetComponent<LevelPart>();
-        newPiece.transform.Translate(Vector3.forward * (lastHalfLength + newPiece.halfLength), Space.Self);
-        activeLevelParts.Add(newPiece);
+        upcomingPart.transform.localPosition = lastPart.transform.position + Vector3.forward * (lastHalfLength + upcomingPart.halfLength);
+        activeLevelParts.Add(upcomingPart);
         firstPartHalfLength = activeLevelParts[0].halfLength;
+        upcomingPart = Instantiate(RandomPartPrefab, levelPartBufferPosition.position, Quaternion.identity, transform).GetComponent<LevelPart>();
     }
     private void OnLoadBasePartsHandle_Completed(AsyncOperationHandle<IList<GameObject>> operation)
     {
@@ -54,6 +59,7 @@ public class LevelManager : MonoBehaviour
         {
             isLevelPaused = false;
             levelPartPrefabs = operation.Result;
+            upcomingPart = Instantiate(RandomPartPrefab, levelPartBufferPosition.position, Quaternion.identity, transform).GetComponent<LevelPart>();
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
