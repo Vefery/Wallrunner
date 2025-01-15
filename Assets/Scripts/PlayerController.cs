@@ -1,18 +1,19 @@
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
 
 public class PlayerController : MonoBehaviour
 {
+    public UnityEvent onGameOver;
     public float swipeDeltaThreshold;
+    public LayerMask raycastLayerMask;
 
-    InputAction jumpAction;
-    Vector2 swipeDelta = Vector2.zero;
-    CapsuleCollider playerCollider;
-    bool onRightWall = true;
-    bool isMidair = false;
+    private Vector2 swipeDelta = Vector2.zero;
+    private CapsuleCollider playerCollider;
+    private bool onRightWall = true;
+    private bool isMidair = false;
+    private bool isControlLocked = false;
 
     private void Awake()
     {
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTouchEnd(InputAction.CallbackContext context)
     {
-        if (isMidair)
+        if (isMidair || isControlLocked)
             return;
 
         RaycastHit hit;
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!onRightWall)
             {
-                if (Physics.Raycast(transform.position, Vector3.right, out hit, 15))
+                if (Physics.Raycast(transform.position, Vector3.right, out hit, 15, raycastLayerMask))
                 {
                     onRightWall = true;
                     StartCoroutine(JumpCoroutine(hit.point - Vector3.right * playerCollider.radius));
@@ -46,13 +47,18 @@ public class PlayerController : MonoBehaviour
         {
             if (onRightWall)
             {
-                if (Physics.Raycast(transform.position, -Vector3.right, out hit, 15))
+                if (Physics.Raycast(transform.position, -Vector3.right, out hit, 15, raycastLayerMask))
                 {
                     onRightWall = false;
                     StartCoroutine(JumpCoroutine(hit.point + Vector3.right * playerCollider.radius));
                 }
             }
         }
+    }
+    public void TriggerGameOver()
+    {
+        onGameOver.Invoke();
+        isControlLocked = true;
     }
     private void OnTouchMove(InputAction.CallbackContext context)
     {

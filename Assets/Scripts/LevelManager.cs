@@ -20,7 +20,6 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        // RELEASE HANDLE ON GAMEOVER
         AsyncOperationHandle<IList<GameObject>> loadBasePartsHandle = Addressables.LoadAssetsAsync<GameObject>("BaseLevelParts");
         loadBasePartsHandle.Completed += OnLoadBasePartsHandle_Completed;
     }
@@ -41,6 +40,10 @@ public class LevelManager : MonoBehaviour
             if (activeLevelParts[0].transform.localPosition.z < -(firstPartHalfLength + levelPartDistanceLimit))
                 UpdateLevelParts();
         }
+    }
+    public void OnGameOver()
+    {
+        isLevelPaused = true;
     }
     private void UpdateLevelParts()
     {
@@ -63,5 +66,7 @@ public class LevelManager : MonoBehaviour
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
+
+        operation.Release();
     }
 }

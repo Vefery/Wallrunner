@@ -167,10 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStartingPosition: {fileID: 1819532974}
+  levelPartBufferPosition: {fileID: 908367781}
   levelPartDistanceLimit: -4
   levelSpeed: 10
-  levelPartPrefabs:
-  - {fileID: 8929288502864375644, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
+  isLevelPaused: 1
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,13 +257,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0846344, y: 0, z: 0, w: 0.9964121}
-  m_LocalPosition: {x: 0, y: 2.85, z: -0.36}
+  m_LocalRotation: {x: 0.1929501, y: 0, z: 0, w: 0.9812086}
+  m_LocalPosition: {x: 0, y: 4, z: -0.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 9.71, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 22.25, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,7 +451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6285240544013476277, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 6285240544013476277, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -515,11 +515,12 @@ GameObject:
   - component: {fileID: 607066198}
   - component: {fileID: 607066197}
   - component: {fileID: 607066196}
+  - component: {fileID: 607066203}
   - component: {fileID: 607066201}
   - component: {fileID: 607066202}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -627,7 +628,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ea4b464651eed448f1127fcffa9087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onGameOver:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 245016664}
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+        m_MethodName: OnGameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   swipeDeltaThreshold: 3
+  raycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 55
 --- !u!114 &607066202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,6 +659,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31057ef324a04478bb4f7d469b3cdc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &607066203
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607066195}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,6 +735,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &908367780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 908367781}
+  m_Layer: 0
+  m_Name: LevelPartBuffer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &908367781
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908367780}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 25.1, z: -50.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1312798091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -711,7 +788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6285240544013476277, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 50
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 6285240544013476277, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -802,6 +879,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 245016663}
     m_Modifications:
+    - target: {fileID: 4837919903480407730, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4837919903480407730, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
+      propertyPath: obstacleSockets.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6134758625648194796, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -816,7 +901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6285240544013476277, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6285240544013476277, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -874,3 +959,4 @@ SceneRoots:
   - {fileID: 1819532974}
   - {fileID: 607066199}
   - {fileID: 245016663}
+  - {fileID: 908367781}
