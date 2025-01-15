@@ -5,12 +5,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public UnityEvent onGameOver;
+    public float jumpSpeed;
     public float swipeDeltaThreshold;
     public LayerMask raycastLayerMask;
+    public UnityEvent onGameOver;
 
     private Vector2 swipeDelta = Vector2.zero;
     private CapsuleCollider playerCollider;
+    private TouchInput controls;
     private bool onRightWall = true;
     private bool isMidair = false;
     private bool isControlLocked = false;
@@ -21,7 +23,7 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-        TouchInput controls = new();
+        controls = new();
         controls.Enable();
         controls.Player.Touch.canceled += OnTouchEnd;
         controls.Player.Swipe.performed += OnTouchMove;
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour
     public void TriggerGameOver()
     {
         onGameOver.Invoke();
+        controls.Disable();
         isControlLocked = true;
     }
     private void OnTouchMove(InputAction.CallbackContext context)
@@ -71,7 +74,7 @@ public class PlayerController : MonoBehaviour
         isMidair = true;
         while (progress < 1f)
         {
-            progress += 3.5f * Time.deltaTime;
+            progress += jumpSpeed * Time.deltaTime;
             Vector3 temp = Vector3.Lerp(startPoint, destination, progress);
             temp.y = -0.05f * (transform.position.x + startPoint.x) * (transform.position.x + destination.x);
             transform.position = temp;
