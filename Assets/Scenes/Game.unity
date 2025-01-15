@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStartingPosition: {fileID: 1819532974}
   levelPartDistanceLimit: -4
+  levelSpeed: 10
   levelPartPrefabs:
   - {fileID: 8929288502864375644, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
 --- !u!1 &330585543
@@ -436,6 +437,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 245016663}
     m_Modifications:
+    - target: {fileID: 6134758625648194796, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d57784891971ede4088c867e60c2bc30, type: 2}
     - target: {fileID: 6285240544013476277, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -476,6 +481,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7653445899467713544, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d57784891971ede4088c867e60c2bc30, type: 2}
     - target: {fileID: 8929288502864375644, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_Name
       value: ShortPart (2)
@@ -688,6 +697,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 245016663}
     m_Modifications:
+    - target: {fileID: 6134758625648194796, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 22296605567d01d4dbb47c802c176e98, type: 2}
     - target: {fileID: 6285240544013476277, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -728,6 +741,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7653445899467713544, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 22296605567d01d4dbb47c802c176e98, type: 2}
     - target: {fileID: 8929288502864375644, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_Name
       value: ShortPart (1)
@@ -785,6 +802,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 245016663}
     m_Modifications:
+    - target: {fileID: 6134758625648194796, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bdb035e4e7c26704e930c6c924834024, type: 2}
     - target: {fileID: 6285240544013476277, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -825,6 +846,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7653445899467713544, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bdb035e4e7c26704e930c6c924834024, type: 2}
     - target: {fileID: 8929288502864375644, guid: 4c236e61bf48cc148929a1c50f58476d, type: 3}
       propertyPath: m_Name
       value: ShortPart

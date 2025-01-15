@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!onRightWall)
             {
-                if (Physics.Raycast(transform.position, Vector3.right, out hit, 20))
+                if (Physics.Raycast(transform.position, Vector3.right, out hit, 15))
                 {
                     onRightWall = true;
                     StartCoroutine(JumpCoroutine(hit.point - Vector3.right * playerCollider.radius));
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         {
             if (onRightWall)
             {
-                if (Physics.Raycast(transform.position, -Vector3.right, out hit, 20))
+                if (Physics.Raycast(transform.position, -Vector3.right, out hit, 15))
                 {
                     onRightWall = false;
                     StartCoroutine(JumpCoroutine(hit.point + Vector3.right * playerCollider.radius));
