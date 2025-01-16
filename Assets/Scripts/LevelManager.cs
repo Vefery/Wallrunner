@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using static UnityEngine.Rendering.HDROutputUtils;
 
 public class LevelManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class LevelManager : MonoBehaviour
     private List<LevelPart> activeLevelParts = new();
     private IList<GameObject> levelPartPrefabs;
     private LevelPart upcomingPart;
+    private AsyncOperationHandle<IList<GameObject>> levelPartsOperation;
     private GameObject RandomPartPrefab { get => levelPartPrefabs[Random.Range(0, levelPartPrefabs.Count)]; }
 
     private void Awake()
@@ -43,6 +45,10 @@ public class LevelManager : MonoBehaviour
     }
     public void OnGameOver()
     {
+        levelPartsOperation.Release();
+    }
+    public void OnRevertableGameOver()
+    {
         isLevelPaused = true;
     }
     private void UpdateLevelParts()
@@ -66,7 +72,6 @@ public class LevelManager : MonoBehaviour
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
-
-        operation.Release();
+        levelPartsOperation = operation;
     }
 }

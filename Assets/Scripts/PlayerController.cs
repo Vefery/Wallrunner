@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed;
     public float swipeDeltaThreshold;
     public LayerMask raycastLayerMask;
-    public UnityEvent onGameOver;
+    public UnityEvent onRevertableGameOver;
 
     private Vector2 swipeDelta = Vector2.zero;
     private CapsuleCollider playerCollider;
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
     }
     public void TriggerGameOver()
     {
-        onGameOver.Invoke();
+        onRevertableGameOver.Invoke();
         controls.Disable();
         isControlLocked = true;
     }

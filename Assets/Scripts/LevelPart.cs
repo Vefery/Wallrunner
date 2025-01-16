@@ -23,14 +23,12 @@ public class LevelPart : MonoBehaviour
         if (operation.Status == AsyncOperationStatus.Succeeded)
         {
             obstaclesPrefabs = operation.Result;
-            SpawnObstacles().Forget();
+            SpawnObstacles(operation).Forget();
         }
         else
             Debug.LogError("Failed to load obstacles!");
-
-        operation.Release();
     }
-    private async UniTaskVoid SpawnObstacles()
+    private async UniTaskVoid SpawnObstacles(AsyncOperationHandle<IList<GameObject>> operation)
     {
         foreach (Transform socket in obstacleSockets)
         {
@@ -40,5 +38,7 @@ public class LevelPart : MonoBehaviour
             }
             await UniTask.Yield();
         }
+        obstaclesPrefabs = null;
+        operation.Release();
     }
 }
