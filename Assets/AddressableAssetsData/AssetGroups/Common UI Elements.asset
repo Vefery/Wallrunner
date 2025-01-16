@@ -10,18 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Scenes
+  m_Name: Common UI Elements
   m_EditorClassIdentifier: 
-  m_GroupName: Scenes
-  m_GUID: c899ae0dd2bc0324daaaade312d9e700
+  m_GroupName: Common UI Elements
+  m_GUID: 97c1b9c63ec677044957ae5b30306dae
   m_SerializeEntries:
-  - m_GUID: 99c9720ab356a0642a771bea13969a05
-    m_Address: Assets/Scenes/Game.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e493a784ede17014abc21eb946cce870
-    m_Address: Assets/Scenes/Menu.unity
+  - m_GUID: 30bb5f03c0e23424fbe7bbc1c1c7484d
+    m_Address: Assets/Prefabs/LoadingScreen.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -29,5 +24,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: f589a6363e120b1478e3d7046430a394, type: 2}
-    - {fileID: 11400000, guid: a33d851a174c2c140a023bcb13c6af77, type: 2}
+    - {fileID: 11400000, guid: c200769a0c91ae943bac5807d9fc6491, type: 2}
+    - {fileID: 11400000, guid: dfad9753977514d4cb4cdcad482bf55c, type: 2}

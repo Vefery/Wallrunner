@@ -15,17 +15,14 @@ public enum Menulabel
 }
 public class MenuManager : MonoBehaviour
 {
-    public UnityEvent onLevelRestart;
-
     [SerializeField]
-    private Menulabel primarylabel;
+    private Menulabel primaryLabel;
     private AsyncOperationHandle<SceneInstance> sceneHandle;
-    [SerializeField]
     private MenuItem[] menus;
 
     private void Awake()
     {
-        menus = FindObjectsByType<MenuItem>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList().Where(x => x.Label == primarylabel).ToArray();
+        menus = FindObjectsByType<MenuItem>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList().Where(x => x.Label == primaryLabel).ToArray();
     }
     public void OpenMenu(string name)
     {
@@ -45,9 +42,9 @@ public class MenuManager : MonoBehaviour
     }
     public void OpenMenu(MenuItem menu)
     {
-        if (menu.Label != primarylabel)
+        if (menu.Label != primaryLabel)
         {
-            Debug.LogWarning($"Menu's label {menu.Label} and primary label {primarylabel} don't match");
+            Debug.LogWarning($"Menu's label {menu.Label} and primary label {primaryLabel} don't match");
             return;
         }
         foreach (MenuItem menuItem in menus)
