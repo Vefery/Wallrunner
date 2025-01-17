@@ -1,18 +1,21 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class PlayerController : MonoBehaviour
 {
     public float jumpSpeed;
     public float swipeDeltaThreshold;
     public LayerMask raycastLayerMask;
-    public UnityEvent onRevertableGameOver;
 
     private Vector2 swipeDelta = Vector2.zero;
     private CapsuleCollider playerCollider;
     private TouchInput controls;
+    private AsyncOperationHandle<OnGameOverChannel> gameOverChannelOperation;
+    private OnGameOverChannel gameOverChannel;
     private bool onRightWall = true;
     private bool isMidair = false;
     private bool isControlLocked = false;
@@ -20,6 +23,18 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerCollider = GetComponent<CapsuleCollider>();
+        var gameOverChannelHandle = Addressables.LoadAssetAsync<OnGameOverChannel>("Assets/EventChannels/GameOver Channel.asset");
+        gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
+    }
+    private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<OnGameOverChannel> operation)
+    {
+        if (operation.Status == AsyncOperationStatus.Succeeded)
+        {
+            gameOverChannel = operation.Result;
+        }
+        else
+            Debug.LogError("Failed to load base parts of the level!");
+        gameOverChannelOperation = operation;
     }
     void Start()
     {
@@ -57,9 +72,9 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    public void TriggerGameOver()
+    public void TriggerRevertableGameOver()
     {
-        onRevertableGameOver.Invoke();
+        gameOverChannel.TriggerRevertableGameOver();
         controls.Disable();
         isControlLocked = true;
     }
@@ -82,5 +97,10 @@ public class PlayerController : MonoBehaviour
         }
         transform.position = destination;
         isMidair = false;
+    }
+    private void OnDestroy()
+    {
+        if (gameOverChannelOperation.IsValid())
+            gameOverChannelOperation.Release();
     }
 }

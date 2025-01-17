@@ -6,7 +6,7 @@ public class Obstacle : MonoBehaviour
     {
         if (other.CompareTag("Player") && other.TryGetComponent(out PlayerController player))
         {
-            player.TriggerGameOver();
+            player.TriggerRevertableGameOver();
         }
     }
 }

@@ -1,12 +1,5 @@
-using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
-using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.Events;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceProviders;
 
 public enum Menulabel
 {
@@ -17,7 +10,7 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField]
     private Menulabel primaryLabel;
-    private AsyncOperationHandle<SceneInstance> sceneHandle;
+    [SerializeField]
     private MenuItem[] menus;
 
     private void Awake()

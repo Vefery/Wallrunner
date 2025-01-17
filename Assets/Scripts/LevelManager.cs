@@ -18,12 +18,17 @@ public class LevelManager : MonoBehaviour
     private IList<GameObject> levelPartPrefabs;
     private LevelPart upcomingPart;
     private AsyncOperationHandle<IList<GameObject>> levelPartsOperation;
+    private AsyncOperationHandle<OnGameOverChannel> gameOverChannelOperation;
+    private OnGameOverChannel gameOverChannel;
     private GameObject RandomPartPrefab { get => levelPartPrefabs[Random.Range(0, levelPartPrefabs.Count)]; }
 
     private void Awake()
     {
         AsyncOperationHandle<IList<GameObject>> loadBasePartsHandle = Addressables.LoadAssetsAsync<GameObject>("BaseLevelParts");
         loadBasePartsHandle.Completed += OnLoadBasePartsHandle_Completed;
+
+        var gameOverChannelHandle = Addressables.LoadAssetAsync<OnGameOverChannel>("Assets/EventChannels/GameOver Channel.asset");
+        gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
     }
     private void Start()
     {
@@ -42,10 +47,6 @@ public class LevelManager : MonoBehaviour
             if (activeLevelParts[0].transform.localPosition.z < -(firstPartHalfLength + levelPartDistanceLimit))
                 UpdateLevelParts();
         }
-    }
-    public void OnGameOver()
-    {
-        levelPartsOperation.Release();
     }
     public void OnRevertableGameOver()
     {
@@ -73,5 +74,23 @@ public class LevelManager : MonoBehaviour
         else
             Debug.LogError("Failed to load base parts of the level!");
         levelPartsOperation = operation;
+    }
+    private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<OnGameOverChannel> operation)
+    {
+        if (operation.Status == AsyncOperationStatus.Succeeded)
+        {
+            gameOverChannel = operation.Result;
+            gameOverChannel.OnRevertableGameOver += OnRevertableGameOver;
+        }
+        else
+            Debug.LogError("Failed to load base parts of the level!");
+        gameOverChannelOperation = operation;
+    }
+    private void OnDestroy()
+    {
+        if (levelPartsOperation.IsValid())
+            levelPartsOperation.Release();
+        if (gameOverChannelOperation.IsValid())
+            gameOverChannelOperation.Release();
     }
 }

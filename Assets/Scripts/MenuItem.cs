@@ -8,6 +8,11 @@ public class MenuItem : MonoBehaviour
 
     [SerializeField]
     private Menulabel _label;
+    private void Awake()
+    {
+        if (!isOpened)
+            gameObject.SetActive(false);
+    }
     public void Open()
     {
         if (isOpened)
