@@ -48,7 +48,7 @@ public class LevelManager : MonoBehaviour
                 UpdateLevelParts();
         }
     }
-    public void OnRevertableGameOver()
+    public void OnGameOver()
     {
         isLevelPaused = true;
     }
@@ -80,7 +80,7 @@ public class LevelManager : MonoBehaviour
         if (operation.Status == AsyncOperationStatus.Succeeded)
         {
             gameOverChannel = operation.Result;
-            gameOverChannel.OnRevertableGameOver += OnRevertableGameOver;
+            gameOverChannel.OnGameOver.AddListener(OnGameOver);
         }
         else
             Debug.LogError("Failed to load base parts of the level!");

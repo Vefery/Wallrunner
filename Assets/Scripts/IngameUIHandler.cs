@@ -37,12 +37,12 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
         _currentScore += Time.deltaTime * speed;
         ingameScoreText.SetText($"Score: {CurrentScore}m");
     }
-    public void OnGameOver()
+    public void OnRestartGame()
     {
         isGameOver = true;
         menuManager.OpenMenu("Loading");
     }
-    public void OnRevertableGameOver()
+    public void OnGameOver()
     {
         isGameOver = true;
         menuManager.OpenMenu("GameOver");
@@ -54,7 +54,7 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
         recordScore = data.RecordScore;
     }
 
-    public void SaveData(GameData data)
+    public void FetchData(GameData data)
     {
         if (CurrentScore > recordScore)
             data.RecordScore = CurrentScore;
@@ -64,8 +64,8 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
         if (operation.Status == AsyncOperationStatus.Succeeded)
         {
             gameOverChannel = operation.Result;
-            gameOverChannel.OnRevertableGameOver += OnRevertableGameOver;
-            gameOverChannel.OnGameOver += OnGameOver;
+            gameOverChannel.OnGameOver.AddListener(OnGameOver);
+            gameOverChannel.OnRestartGame.AddListener(OnRestartGame);
         }
         else
             Debug.LogError("Failed to load base parts of the level!");

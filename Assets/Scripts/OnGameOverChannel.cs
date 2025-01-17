@@ -5,14 +5,14 @@ using UnityEngine.Events;
 [CreateAssetMenu(menuName = "GameOver Channel")]
 public class OnGameOverChannel : ScriptableObject
 {
-    public UnityAction OnGameOver;
-    public UnityAction OnRevertableGameOver;
-    public void TriggerRevertableGameOver()
-    {
-        OnRevertableGameOver?.Invoke();
-    }
+    public UnityEvent OnRestartGame;
+    public UnityEvent OnGameOver;
     public void TriggerGameOver()
     {
-        OnGameOver?.Invoke();
+        OnGameOver.Invoke();
+    }
+    public void TriggerRestartGame()
+    {
+        OnRestartGame.Invoke();
     }
 }

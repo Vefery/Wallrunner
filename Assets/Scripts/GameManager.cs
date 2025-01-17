@@ -26,27 +26,23 @@ public class GameData
 }
 public class GameManager : MonoBehaviour
 {
-    public GameData gameData { get; private set; }
-
     private AudioSource[] musicSources;
     private AudioSource[] soundSources;
-    private IObjectWithData[] objectsWithData;
     private AsyncOperationHandle<OnGameOverChannel> gameOverChannelOperation;
     private OnGameOverChannel gameOverChannel;
     private string savePath;
     private void Awake()
     {
         savePath = Path.Combine(Application.persistentDataPath, "SaveData");
-        gameData = new GameData();
         musicSources = GameObject.FindGameObjectsWithTag("MusicSource").Select(x => x.GetComponent<AudioSource>()).ToArray();
         soundSources = GameObject.FindGameObjectsWithTag("SoundSource").Select(x => x.GetComponent<AudioSource>()).ToArray();
-        objectsWithData = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IObjectWithData>().ToArray();
 
         var gameOverChannelHandle = Addressables.LoadAssetAsync<OnGameOverChannel>("Assets/EventChannels/GameOver Channel.asset");
         gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
 
         UpdateSettings();
-        Load();
+        SaveManager.Setup(FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IObjectWithData>().ToArray());
+        SaveManager.Load();
     }
     private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<OnGameOverChannel> operation)
     {
@@ -58,32 +54,16 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Failed to load base parts of the level!");
         gameOverChannelOperation = operation;
     }
-    public void TriggerGameOver()
+    public void RestartGame()
     {
-        Save();
-        gameOverChannel.TriggerGameOver();
+        SaveManager.Save();
+        gameOverChannel.TriggerRestartGame();
         RestartLevel();
     }
-    public void Load()
+    public void GoToMenu()
     {
-        if (File.Exists(savePath))
-        {
-            using (FileStream stream = new(savePath, FileMode.Open))
-                gameData = MessagePackSerializer.Deserialize<GameData>(stream);
-        }
-        else
-            gameData = new();
-
-        foreach (IObjectWithData obj in objectsWithData)
-            obj.LoadData(gameData);
-    }
-    public void Save()
-    {
-        foreach (IObjectWithData obj in objectsWithData)
-            obj.SaveData(gameData);
-
-        using (FileStream stream = new(savePath, FileMode.Create))
-            stream.Write(MessagePackSerializer.Serialize(gameData));
+        SaveManager.Save();
+        LoadLevel("Menu");
     }
     public void UpdateSettings()
     {
@@ -95,11 +75,11 @@ public class GameManager : MonoBehaviour
             source.volume = soundVolume;
         Application.targetFrameRate = Convert.ToBoolean(PlayerPrefs.GetInt("batterySaveMode", 1)) ? 30 : 60;
     }
-    public void RestartLevel()
+    private void RestartLevel()
     {
         Addressables.LoadSceneAsync($"Assets/Scenes/{SceneManager.GetActiveScene().name}.unity", LoadSceneMode.Single);
     }
-    public void LoadLevel(string levelName)
+    private void LoadLevel(string levelName)
     {
         Addressables.LoadSceneAsync($"Assets/Scenes/{levelName}.unity", LoadSceneMode.Single);
     }

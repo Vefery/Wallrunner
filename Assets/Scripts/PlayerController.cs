@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
     }
     public void TriggerRevertableGameOver()
     {
-        gameOverChannel.TriggerRevertableGameOver();
+        gameOverChannel.TriggerGameOver();
         controls.Disable();
         isControlLocked = true;
     }
