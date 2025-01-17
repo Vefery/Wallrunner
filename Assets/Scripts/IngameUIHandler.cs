@@ -40,7 +40,10 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
     public void OnRestartGame()
     {
         isGameOver = true;
-        menuManager.OpenMenu("Loading");
+    }
+    public void OnResurrect()
+    {
+        isGameOver = false;
     }
     public void OnGameOver()
     {
@@ -66,6 +69,7 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
             gameOverChannel = operation.Result;
             gameOverChannel.OnGameOver.AddListener(OnGameOver);
             gameOverChannel.OnRestartGame.AddListener(OnRestartGame);
+            gameOverChannel.OnResurrect.AddListener(OnResurrect);
         }
         else
             Debug.LogError("Failed to load base parts of the level!");

@@ -60,6 +60,10 @@ public class GameManager : MonoBehaviour
         gameOverChannel.TriggerRestartGame();
         RestartLevel();
     }
+    public void Resurrect()
+    {
+        gameOverChannel.TriggerResurrect();
+    }
     public void GoToMenu()
     {
         SaveManager.Save();

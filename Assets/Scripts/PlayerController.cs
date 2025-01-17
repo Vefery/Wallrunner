@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
         if (operation.Status == AsyncOperationStatus.Succeeded)
         {
             gameOverChannel = operation.Result;
+            gameOverChannel.OnResurrect.AddListener(OnRessurect);
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
@@ -77,6 +78,11 @@ public class PlayerController : MonoBehaviour
         gameOverChannel.TriggerGameOver();
         controls.Disable();
         isControlLocked = true;
+    }
+    public void OnRessurect()
+    {
+        controls.Enable();
+        isControlLocked = false;
     }
     private void OnTouchMove(InputAction.CallbackContext context)
     {

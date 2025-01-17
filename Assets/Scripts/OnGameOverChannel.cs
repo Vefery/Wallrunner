@@ -7,6 +7,7 @@ public class OnGameOverChannel : ScriptableObject
 {
     public UnityEvent OnRestartGame;
     public UnityEvent OnGameOver;
+    public UnityEvent OnResurrect;
     public void TriggerGameOver()
     {
         OnGameOver.Invoke();
@@ -14,5 +15,9 @@ public class OnGameOverChannel : ScriptableObject
     public void TriggerRestartGame()
     {
         OnRestartGame.Invoke();
+    }
+    public void TriggerResurrect()
+    {
+        OnResurrect.Invoke();
     }
 }

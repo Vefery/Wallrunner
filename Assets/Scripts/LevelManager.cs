@@ -52,6 +52,14 @@ public class LevelManager : MonoBehaviour
     {
         isLevelPaused = true;
     }
+    public void OnResurrect()
+    {
+        Collider[] nearObstacles = Physics.OverlapSphere(activeLevelParts[0].transform.position, activeLevelParts[0].halfLength + 10, layerMask: LayerMask.GetMask("Obstacles"));
+        foreach (Collider collider in nearObstacles)
+            Destroy(collider.gameObject);
+
+        isLevelPaused = false;
+    }
     private void UpdateLevelParts()
     {
         LevelPart lastPart = activeLevelParts.Last();
@@ -81,6 +89,7 @@ public class LevelManager : MonoBehaviour
         {
             gameOverChannel = operation.Result;
             gameOverChannel.OnGameOver.AddListener(OnGameOver);
+            gameOverChannel.OnResurrect.AddListener(OnResurrect);
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
