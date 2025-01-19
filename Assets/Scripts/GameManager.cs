@@ -28,8 +28,8 @@ public class GameManager : MonoBehaviour
 {
     private AudioSource[] musicSources;
     private AudioSource[] soundSources;
-    private AsyncOperationHandle<OnGameOverChannel> gameOverChannelOperation;
-    private OnGameOverChannel gameOverChannel;
+    private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
+    private IngameChannel ingameChannel;
     private string savePath;
     private void Awake()
     {
@@ -37,37 +37,41 @@ public class GameManager : MonoBehaviour
         musicSources = GameObject.FindGameObjectsWithTag("MusicSource").Select(x => x.GetComponent<AudioSource>()).ToArray();
         soundSources = GameObject.FindGameObjectsWithTag("SoundSource").Select(x => x.GetComponent<AudioSource>()).ToArray();
 
-        var gameOverChannelHandle = Addressables.LoadAssetAsync<OnGameOverChannel>("Assets/EventChannels/GameOver Channel.asset");
+        var gameOverChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
 
         UpdateSettings();
         SaveManager.Setup(FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IObjectWithData>().ToArray());
         SaveManager.Load();
     }
-    private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<OnGameOverChannel> operation)
+    private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
     {
         if (operation.Status == AsyncOperationStatus.Succeeded)
         {
-            gameOverChannel = operation.Result;
+            ingameChannel = operation.Result;
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
-        gameOverChannelOperation = operation;
+        ingameChannelOperation = operation;
     }
     public void RestartGame()
     {
         SaveManager.Save();
-        gameOverChannel.TriggerRestartGame();
+        ingameChannel.TriggerRestartGame();
         RestartLevel();
     }
     public void Resurrect()
     {
-        gameOverChannel.TriggerResurrect();
+        ingameChannel.TriggerResurrect();
     }
     public void GoToMenu()
     {
         SaveManager.Save();
         LoadLevel("Menu");
+    }
+    public void Pause(bool isPaused)
+    {
+        ingameChannel.TriggerPause(isPaused);
     }
     public void UpdateSettings()
     {
@@ -89,7 +93,7 @@ public class GameManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if (gameOverChannelOperation.IsValid())
-            gameOverChannelOperation.Release();
+        if (ingameChannelOperation.IsValid())
+            ingameChannelOperation.Release();
     }
 }

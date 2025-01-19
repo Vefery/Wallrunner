@@ -10,13 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Event Channels
+  m_Name: Black Player
   m_EditorClassIdentifier: 
-  m_GroupName: Event Channels
-  m_GUID: 23f382fa29c9ff142a7c14e35c598bb1
+  m_GroupName: Black Player
+  m_GUID: 37e0c5bae4c425047ab6c61c682df086
   m_SerializeEntries:
-  - m_GUID: 1eb0051b3575aed499c21ef6ddd58c56
-    m_Address: Assets/EventChannels/Ingame Channel.asset
+  - m_GUID: b4005b24e8189d14289afdc6cb7e3720
+    m_Address: Assets/Materials/Black.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd3052a9b88584d47a2fd125207f20a0
+    m_Address: Assets/Prefabs/BlackPlayer.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -24,5 +29,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 9794e14c72a86804c8fc609e6594236f, type: 2}
-    - {fileID: 11400000, guid: a50c89ef41d054643812c76a453777a1, type: 2}
+    - {fileID: 11400000, guid: a6ddeaba73af3fe4b86c22481184e8e5, type: 2}
+    - {fileID: 11400000, guid: c3aeb911ed38f144b99b7c17f472cffd, type: 2}

@@ -14,28 +14,30 @@ public class PlayerController : MonoBehaviour
     private Vector2 swipeDelta = Vector2.zero;
     private CapsuleCollider playerCollider;
     private TouchInput controls;
-    private AsyncOperationHandle<OnGameOverChannel> gameOverChannelOperation;
-    private OnGameOverChannel gameOverChannel;
+    private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
+    private IngameChannel ingameChannel;
     private bool onRightWall = true;
     private bool isMidair = false;
-    private bool isControlLocked = false;
+    private bool isDead = false;
+    private bool isPaused = false;
 
     private void Awake()
     {
         playerCollider = GetComponent<CapsuleCollider>();
-        var gameOverChannelHandle = Addressables.LoadAssetAsync<OnGameOverChannel>("Assets/EventChannels/GameOver Channel.asset");
-        gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
+        var ingameChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
+        ingameChannelHandle.Completed += OnLoadGameOverChannel_Completed;
     }
-    private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<OnGameOverChannel> operation)
+    private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
     {
         if (operation.Status == AsyncOperationStatus.Succeeded)
         {
-            gameOverChannel = operation.Result;
-            gameOverChannel.OnResurrect.AddListener(OnRessurect);
+            ingameChannel = operation.Result;
+            ingameChannel.OnResurrect.AddListener(OnRessurect);
+            ingameChannel.OnPause.AddListener(OnPause);
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
-        gameOverChannelOperation = operation;
+        ingameChannelOperation = operation;
     }
     void Start()
     {
@@ -43,10 +45,11 @@ public class PlayerController : MonoBehaviour
         controls.Enable();
         controls.Player.Touch.canceled += OnTouchEnd;
         controls.Player.Swipe.performed += OnTouchMove;
+        controls.UI.Back.performed += OnBackButton;
     }
     private void OnTouchEnd(InputAction.CallbackContext context)
     {
-        if (isMidair || isControlLocked)
+        if (isMidair || isDead)
             return;
 
         RaycastHit hit;
@@ -75,14 +78,33 @@ public class PlayerController : MonoBehaviour
     }
     public void TriggerRevertableGameOver()
     {
-        gameOverChannel.TriggerGameOver();
+        ingameChannel.TriggerGameOver();
         controls.Disable();
-        isControlLocked = true;
+        isDead = true;
     }
-    public void OnRessurect()
+    private void OnBackButton(InputAction.CallbackContext context)
+    {
+        if (isDead)
+            return;
+
+        ingameChannel.TriggerPause(!isPaused);
+    }
+    private void OnPause(bool isPaused)
+    {
+        if (isPaused)
+        {
+            controls.Disable();
+        }
+        else
+        {
+            controls.Enable();
+        }
+        this.isPaused = isPaused;
+    }
+    private void OnRessurect()
     {
         controls.Enable();
-        isControlLocked = false;
+        isDead = false;
     }
     private void OnTouchMove(InputAction.CallbackContext context)
     {
@@ -106,7 +128,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if (gameOverChannelOperation.IsValid())
-            gameOverChannelOperation.Release();
+        if (ingameChannelOperation.IsValid())
+            ingameChannelOperation.Release();
     }
 }

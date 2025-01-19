@@ -2,12 +2,17 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(menuName = "GameOver Channel")]
-public class OnGameOverChannel : ScriptableObject
+[CreateAssetMenu(menuName = "Channels/GameOver Channel", fileName = "OnGameOver Channel")]
+public class IngameChannel : ScriptableObject
 {
     public UnityEvent OnRestartGame;
     public UnityEvent OnGameOver;
     public UnityEvent OnResurrect;
+    public UnityEvent<bool> OnPause;
+    public void TriggerPause(bool isPaused)
+    {
+        OnPause.Invoke(isPaused);
+    }
     public void TriggerGameOver()
     {
         OnGameOver.Invoke();

@@ -15,11 +15,6 @@ MonoBehaviour:
   m_GroupName: Level Parts Resources
   m_GUID: a29548a8c8ba5ed44bea9d1958a4e741
   m_SerializeEntries:
-  - m_GUID: 22296605567d01d4dbb47c802c176e98
-    m_Address: Assets/Materials/Blue.mat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bdb035e4e7c26704e930c6c924834024
     m_Address: Assets/Materials/Green.mat
     m_ReadOnly: 0

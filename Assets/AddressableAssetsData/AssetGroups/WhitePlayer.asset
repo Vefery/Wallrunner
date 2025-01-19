@@ -10,13 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Event Channels
+  m_Name: WhitePlayer
   m_EditorClassIdentifier: 
-  m_GroupName: Event Channels
-  m_GUID: 23f382fa29c9ff142a7c14e35c598bb1
+  m_GroupName: WhitePlayer
+  m_GUID: 1e150c3f64d43944a8e2dcda6f9c8dfa
   m_SerializeEntries:
-  - m_GUID: 1eb0051b3575aed499c21ef6ddd58c56
-    m_Address: Assets/EventChannels/Ingame Channel.asset
+  - m_GUID: ae200a345e797b64dbc55d03996c9d02
+    m_Address: Assets/Prefabs/WhitePlayer.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c13d3fcc7a213f3498bf90b812e0985e
+    m_Address: Assets/Materials/White.mat
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -24,5 +29,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 9794e14c72a86804c8fc609e6594236f, type: 2}
-    - {fileID: 11400000, guid: a50c89ef41d054643812c76a453777a1, type: 2}
+    - {fileID: 11400000, guid: 0ddcd3ac0bd08c54690db67bb1ef1be3, type: 2}
+    - {fileID: 11400000, guid: 862397a4b2cfd8f47a1552fc6f6f4cb8, type: 2}

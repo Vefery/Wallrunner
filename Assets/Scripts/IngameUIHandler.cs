@@ -12,17 +12,17 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
     public int CurrentScore { get => (int)_currentScore; }
 
     private MenuManager menuManager;
-    private OnGameOverChannel gameOverChannel;
+    private IngameChannel ingameChannel;
     private float _currentScore;
     private int recordScore;
     private float speed = 0f;
-    private bool isGameOver = false;
-    private AsyncOperationHandle<OnGameOverChannel> gameOverChannelOperation;
+    private bool isScoreStopped = false;
+    private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
     private void Awake()
     {
         speed = FindFirstObjectByType<LevelManager>().levelSpeed / 2f;
         menuManager = GetComponent<MenuManager>();
-        var gameOverChannelHandle = Addressables.LoadAssetAsync<OnGameOverChannel>("Assets/EventChannels/GameOver Channel.asset");
+        var gameOverChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
     }
     private void Start()
@@ -31,23 +31,15 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
     }
     private void Update()
     {
-        if (isGameOver)
+        if (isScoreStopped)
             return;
 
         _currentScore += Time.deltaTime * speed;
         ingameScoreText.SetText($"Score: {CurrentScore}m");
     }
-    public void OnRestartGame()
-    {
-        isGameOver = true;
-    }
-    public void OnResurrect()
-    {
-        isGameOver = false;
-    }
     public void OnGameOver()
     {
-        isGameOver = true;
+        isScoreStopped = true;
         menuManager.OpenMenu("GameOver");
         finalScoreText.SetText($"Your score\n{CurrentScore}m");
         recordScoreText.SetText($"Record score\n{recordScore}");
@@ -62,22 +54,22 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
         if (CurrentScore > recordScore)
             data.RecordScore = CurrentScore;
     }
-    private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<OnGameOverChannel> operation)
+    private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
     {
         if (operation.Status == AsyncOperationStatus.Succeeded)
         {
-            gameOverChannel = operation.Result;
-            gameOverChannel.OnGameOver.AddListener(OnGameOver);
-            gameOverChannel.OnRestartGame.AddListener(OnRestartGame);
-            gameOverChannel.OnResurrect.AddListener(OnResurrect);
+            ingameChannel = operation.Result;
+            ingameChannel.OnGameOver.AddListener(OnGameOver);
+            ingameChannel.OnResurrect.AddListener(() => isScoreStopped = false);
+            ingameChannel.OnPause.AddListener((isPaused) => isScoreStopped = isPaused);
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
-        gameOverChannelOperation = operation;
+        ingameChannelOperation = operation;
     }
     private void OnDestroy()
     {
-        if (gameOverChannelOperation.IsValid())
-            gameOverChannelOperation.Release();
+        if (ingameChannelOperation.IsValid())
+            ingameChannelOperation.Release();
     }
 }

@@ -31,7 +31,7 @@
                     "path": "<Touchscreen>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Touch",
                     "action": "Swipe",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -42,8 +42,36 @@
                     "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Touch",
                     "action": "Touch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "7870c4c1-b28a-4d1c-96e9-d170de9b38a4",
+            "actions": [
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "e5f3c346-14b6-4c79-ad38-1e102a7c48f2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d106aa9b-82ee-4c41-9388-0043ec6a985a",
+                    "path": "*/{Back}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
