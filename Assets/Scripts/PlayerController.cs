@@ -5,12 +5,13 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IObjectWithData
 {
     public float jumpSpeed;
     public float swipeDeltaThreshold;
     public LayerMask raycastLayerMask;
 
+    private PlayerModelController playerModelController;
     private Vector2 swipeDelta = Vector2.zero;
     private CapsuleCollider playerCollider;
     private TouchInput controls;
@@ -20,12 +21,14 @@ public class PlayerController : MonoBehaviour
     private bool isMidair = false;
     private bool isDead = false;
     private bool isPaused = false;
+    private float playerYlevel;
 
     private void Awake()
     {
         playerCollider = GetComponent<CapsuleCollider>();
         var ingameChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         ingameChannelHandle.Completed += OnLoadGameOverChannel_Completed;
+        playerYlevel = transform.position.y;
     }
     private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
     {
@@ -119,7 +122,7 @@ public class PlayerController : MonoBehaviour
         {
             progress += jumpSpeed * Time.deltaTime;
             Vector3 temp = Vector3.Lerp(startPoint, destination, progress);
-            temp.y = -0.05f * (transform.position.x + startPoint.x) * (transform.position.x + destination.x);
+            temp.y = -0.05f * (transform.position.x + startPoint.x) * (transform.position.x + destination.x) + playerYlevel;
             transform.position = temp;
             yield return null;
         }
@@ -130,5 +133,29 @@ public class PlayerController : MonoBehaviour
     {
         if (ingameChannelOperation.IsValid())
             ingameChannelOperation.Release();
+    }
+
+    public void LoadData(GameData data)
+    {
+        if (playerModelController != null)
+            return;
+
+        var playerModelHandle = Addressables.LoadAssetAsync<GameObject>($"Assets/Prefabs/Skins/{data.primarySkinName}.prefab");
+        playerModelHandle.Completed += OnLoadPlayerModel_Completed;
+    }
+    private void OnLoadPlayerModel_Completed(AsyncOperationHandle<GameObject> operation)
+    {
+        if (operation.Status == AsyncOperationStatus.Succeeded)
+        {
+            playerModelController = Instantiate(operation.Result, transform.position, Quaternion.identity, transform).GetComponent<PlayerModelController>();
+        }
+        else
+            Debug.LogError("Failed to load player model!");
+        if (operation.IsValid())
+            operation.Release();
+    }
+    public void FetchData(GameData data)
+    {
+        data.primarySkinName = playerModelController.SkinName;
     }
 }

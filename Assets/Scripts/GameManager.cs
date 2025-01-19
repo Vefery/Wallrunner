@@ -13,6 +13,8 @@ using UnityEngine.SceneManagement;
 public class GameData
 {
     private int _recordScore = 0;
+    [Key("primarySkin")]
+    public string primarySkinName = "Black";
     [Key("recordScore")]
     public int RecordScore
     {
@@ -30,10 +32,8 @@ public class GameManager : MonoBehaviour
     private AudioSource[] soundSources;
     private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
     private IngameChannel ingameChannel;
-    private string savePath;
     private void Awake()
     {
-        savePath = Path.Combine(Application.persistentDataPath, "SaveData");
         musicSources = GameObject.FindGameObjectsWithTag("MusicSource").Select(x => x.GetComponent<AudioSource>()).ToArray();
         soundSources = GameObject.FindGameObjectsWithTag("SoundSource").Select(x => x.GetComponent<AudioSource>()).ToArray();
 

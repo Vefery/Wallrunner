@@ -16,9 +16,10 @@ MonoBehaviour:
   m_GUID: 1e150c3f64d43944a8e2dcda6f9c8dfa
   m_SerializeEntries:
   - m_GUID: ae200a345e797b64dbc55d03996c9d02
-    m_Address: Assets/Prefabs/WhitePlayer.prefab
+    m_Address: Assets/Prefabs/Skins/White.prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skin
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c13d3fcc7a213f3498bf90b812e0985e
     m_Address: Assets/Materials/White.mat

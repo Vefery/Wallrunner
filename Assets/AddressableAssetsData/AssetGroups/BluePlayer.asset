@@ -21,9 +21,10 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7ae8368a4ca426a4f8a4c586937e3102
-    m_Address: Assets/Prefabs/BluePlayer.prefab
+    m_Address: Assets/Prefabs/Skins/Blue.prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skin
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}

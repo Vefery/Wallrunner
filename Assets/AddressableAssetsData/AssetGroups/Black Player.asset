@@ -21,9 +21,10 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bd3052a9b88584d47a2fd125207f20a0
-    m_Address: Assets/Prefabs/BlackPlayer.prefab
+    m_Address: Assets/Prefabs/Skins/Black.prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skin
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}

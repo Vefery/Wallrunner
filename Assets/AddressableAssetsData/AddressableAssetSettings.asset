@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: c899ae0dd2bc0324daaaade312d9e700
   m_currentHash:
     serializedVersion: 2
-    Hash: 25066c60d540a12c47eaba1671d54418
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -110,6 +110,7 @@ MonoBehaviour:
     - default
     - BaseLevelParts
     - Obstacles
+    - Skin
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 83ec62eb6415df2439374b8c865361be, type: 2}
