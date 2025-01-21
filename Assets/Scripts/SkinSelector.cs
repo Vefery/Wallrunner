@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -12,6 +13,8 @@ public class SkinSelector : MonoBehaviour, IObjectWithData
     public Transform skinSelectCameraPoint;
     [Header("General")]
     public Transform skinsContainer;
+    [Header("UI")]
+    public TMP_Text coinsDisplay;
 
     private Transform mainCamera;
     private Coroutine cameraTurnIEnumerator;
@@ -19,6 +22,7 @@ public class SkinSelector : MonoBehaviour, IObjectWithData
     private int index;
     private int maxIndex;
     private string primarySkinName;
+    private int coins;
     private void Awake()
     {
         mainCamera = Camera.main.transform;
@@ -81,7 +85,7 @@ public class SkinSelector : MonoBehaviour, IObjectWithData
         if (operation.Status == AsyncOperationStatus.Succeeded)
         {
             skins = new(operation.Result.Count);
-            maxIndex = skins.Count - 1;
+            maxIndex = operation.Result.Count - 1;
             SpawnSkins(operation.Result, operation).Forget();
         }
         else
@@ -109,10 +113,13 @@ public class SkinSelector : MonoBehaviour, IObjectWithData
     public void LoadData(GameData data)
     {
         primarySkinName = data.primarySkinName;
+        coinsDisplay.SetText($"Coins: {data.Coins}");
+        coins = data.Coins;
     }
 
     public void FetchData(GameData data)
     {
         data.primarySkinName = primarySkinName;
+        data.Coins = coins;
     }
 }

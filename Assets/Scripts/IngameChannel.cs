@@ -9,9 +9,14 @@ public class IngameChannel : ScriptableObject
     public UnityEvent OnGameOver;
     public UnityEvent OnResurrect;
     public UnityEvent<bool> OnPause;
+    public UnityEvent<int> OnCollectedCoin;
     public void TriggerPause(bool isPaused)
     {
         OnPause.Invoke(isPaused);
+    }
+    public void TriggerCollectedCoin(int amount)
+    {
+        OnCollectedCoin.Invoke(amount);
     }
     public void TriggerGameOver()
     {

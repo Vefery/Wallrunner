@@ -85,6 +85,10 @@ public class PlayerController : MonoBehaviour, IObjectWithData
         controls.Disable();
         isDead = true;
     }
+    public void AddCoin()
+    {
+        ingameChannel.TriggerCollectedCoin(1);
+    }
     private void OnBackButton(InputAction.CallbackContext context)
     {
         if (isDead)

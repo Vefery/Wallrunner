@@ -650,10 +650,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   halfLength: 35
   width: 14
+  coinSpacing: 4
   obstacleCheckMask:
     serializedVersion: 2
     m_Bits: 64
-  obstacleSockets:
+  levelSockets:
   - {fileID: 2174002180304228409}
   - {fileID: 5650462249887042582}
   - {fileID: 4770360610840885471}

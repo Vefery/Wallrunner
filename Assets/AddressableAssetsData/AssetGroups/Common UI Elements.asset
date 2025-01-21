@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f32870ef14e270a43b0f2d1bbf9a7c8c
+    m_Address: Assets/Prefabs/CoinsDisplay.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}
   m_SchemaSet:

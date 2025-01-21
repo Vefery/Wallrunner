@@ -9,6 +9,7 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
     public TMP_Text ingameScoreText;
     public TMP_Text finalScoreText;
     public TMP_Text recordScoreText;
+    public TMP_Text coinsText;
     public int CurrentScore { get => (int)_currentScore; }
 
     private MenuManager menuManager;
@@ -17,6 +18,7 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
     private int recordScore;
     private float speed = 0f;
     private bool isScoreStopped = false;
+    private int collectedCoins = 0;
     private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
     private void Awake()
     {
@@ -37,7 +39,7 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
         _currentScore += Time.deltaTime * speed;
         ingameScoreText.SetText($"Score: {CurrentScore}m");
     }
-    public void OnGameOver()
+    private void OnGameOver()
     {
         isScoreStopped = true;
         menuManager.OpenMenu("GameOver");
@@ -48,11 +50,16 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
     {
         recordScore = data.RecordScore;
     }
-
+    private void OnCollectedCoin(int amount)
+    {
+        collectedCoins += amount;
+        coinsText.SetText($"Coins: {collectedCoins}");
+    }
     public void FetchData(GameData data)
     {
         if (CurrentScore > recordScore)
             data.RecordScore = CurrentScore;
+        data.Coins += collectedCoins;
     }
     private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
     {
@@ -62,6 +69,7 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
             ingameChannel.OnGameOver.AddListener(OnGameOver);
             ingameChannel.OnResurrect.AddListener(() => isScoreStopped = false);
             ingameChannel.OnPause.AddListener((isPaused) => isScoreStopped = isPaused);
+            ingameChannel.OnCollectedCoin.AddListener(OnCollectedCoin);
         }
         else
             Debug.LogError("Failed to load base parts of the level!");

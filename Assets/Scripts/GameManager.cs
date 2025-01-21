@@ -12,18 +12,21 @@ using UnityEngine.SceneManagement;
 [MessagePackObject]
 public class GameData
 {
+    private int _coins = 0;
     private int _recordScore = 0;
     [Key("primarySkin")]
     public string primarySkinName = "Black";
+    [Key("coins")]
+    public int Coins
+    {
+        get => _coins;
+        set => _coins = Mathf.Clamp(value, 0, int.MaxValue);
+    }
     [Key("recordScore")]
     public int RecordScore
     {
-        get => _recordScore; 
-        set
-        {
-            if (value >= 0 && value <= int.MaxValue)
-                _recordScore = value;
-        }
+        get => _recordScore;
+        set => _recordScore = Mathf.Clamp(value, 0, int.MaxValue);
     }
 }
 public class GameManager : MonoBehaviour

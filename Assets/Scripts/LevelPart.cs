@@ -8,15 +8,24 @@ public class LevelPart : MonoBehaviour
 {
     public float halfLength;
     public float width;
+    public float coinSpacing;
     public LayerMask obstacleCheckMask;
-    public Transform[] obstacleSockets;
+    public Transform[] levelSockets;
 
     private IList<GameObject> obstaclesPrefabs;
+    private GameObject coinPrefab;
+    private bool[] freeSockets;
     private GameObject RandomObstaclePrefab { get => obstaclesPrefabs[Random.Range(0, obstaclesPrefabs.Count)]; }
-    private void Awake()
+    private async void Awake()
     {
+        freeSockets = new bool[levelSockets.Length];
+        System.Array.Fill(freeSockets, true);
         AsyncOperationHandle<IList<GameObject>> loadBasePartsHandle = Addressables.LoadAssetsAsync<GameObject>("Obstacles");
-        loadBasePartsHandle.Completed += OnLoadObstaclesHandle_Completed;
+        await loadBasePartsHandle;
+        OnLoadObstaclesHandle_Completed(loadBasePartsHandle);
+
+        AsyncOperationHandle<GameObject> loadCoinPrefabHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/CoinPrefab.prefab");
+        loadCoinPrefabHandle.Completed += OnLoadCoinHandle_Completed;
     }
     private void OnLoadObstaclesHandle_Completed(AsyncOperationHandle<IList<GameObject>> operation)
     {
@@ -28,17 +37,45 @@ public class LevelPart : MonoBehaviour
         else
             Debug.LogError("Failed to load obstacles!");
     }
+    private void OnLoadCoinHandle_Completed(AsyncOperationHandle<GameObject> operation)
+    {
+        if (operation.Status == AsyncOperationStatus.Succeeded)
+        {
+            coinPrefab = operation.Result;
+            SpawnCoins(operation).Forget();
+        }
+        else
+            Debug.LogError("Failed to load coin object!");
+    }
+    private async UniTaskVoid SpawnCoins(AsyncOperationHandle<GameObject> operation)
+    {
+        for (int i = 0; i < freeSockets.Length; i++)
+        {
+            if (freeSockets[i])
+            {
+                Instantiate(coinPrefab, levelSockets[i]);
+                Instantiate(coinPrefab, levelSockets[i]).transform.Translate(Vector3.forward * coinSpacing, Space.World);
+                Instantiate(coinPrefab, levelSockets[i]).transform.Translate(Vector3.back * coinSpacing, Space.World);
+            }
+            await UniTask.Yield();
+        }
+        coinPrefab = null;
+        if (operation.IsValid())
+            operation.Release();
+    }
     private async UniTaskVoid SpawnObstacles(AsyncOperationHandle<IList<GameObject>> operation)
     {
-        foreach (Transform socket in obstacleSockets)
+        for (int i = 0; i < levelSockets.Length; i++)
         {
-            if (Random.Range(0f, 1f) > 0.5f && !Physics.Raycast(socket.position + socket.forward * width - socket.right * 7, socket.right, 14, obstacleCheckMask))
+            if (Random.Range(0f, 1f) > 0.5f && !Physics.Raycast(levelSockets[i].position + levelSockets[i].forward * width - levelSockets[i].right * 7, levelSockets[i].right, 14, obstacleCheckMask))
             {
-                Instantiate(RandomObstaclePrefab, socket, instantiateInWorldSpace: false);
+                freeSockets[i] = false;
+                Instantiate(RandomObstaclePrefab, levelSockets[i], instantiateInWorldSpace: false);
             }
             await UniTask.Yield();
         }
         obstaclesPrefabs = null;
-        operation.Release();
+        if (operation.IsValid())
+            operation.Release();
     }
 }
