@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
         }
         this.isPaused = isPaused;
     }
-    private void OnRessurect()
+    private void OnRessurect(int keysLeft)
     {
         controls.Enable();
         isDead = false;

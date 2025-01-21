@@ -4,25 +4,23 @@ using System.Linq;
 using MessagePack;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 
 [MessagePackObject]
 public class GameData
 {
-    private int _recordScore = 0;
+    [Key("recordScore")]
+    public int recordScore = 0;
     [Key("primarySkin")]
     public string primarySkinName = "Black";
     [Key("coins")]
     public int coins = 0;
+    [Key("keys")]
+    public int resurrectionKeys = 0;
     [Key("unlockedSkins")]
     public List<string> unlockedSkins = new() { "Black" };
-    [Key("recordScore")]
-    public int RecordScore
-    {
-        get => _recordScore;
-        set => _recordScore = Mathf.Clamp(value, 0, int.MaxValue);
-    }
 }
 public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
 {
@@ -31,12 +29,21 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         get => _coins;
         set => _coins = Mathf.Clamp(value, 0, int.MaxValue);
     }
+    public int ResurrectionKeys
+    {
+        get => _resurrectionKeys;
+        set => _resurrectionKeys = Mathf.Clamp(value, 0, int.MaxValue);
+    }
+    public int resurrectionKeysUsage = 1;
+
     private AudioSource[] musicSources;
     private AudioSource[] soundSources;
     private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
     private IngameChannel ingameChannel;
     [SerializeField]
     private int _coins;
+    [SerializeField]
+    private int _resurrectionKeys;
     private void Awake()
     {
         musicSources = GameObject.FindGameObjectsWithTag("MusicSource").Select(x => x.GetComponent<AudioSource>()).ToArray();
@@ -71,7 +78,10 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
     }
     public void Resurrect()
     {
-        ingameChannel.TriggerResurrect();
+        ResurrectionKeys -= resurrectionKeysUsage;
+        resurrectionKeysUsage *= 2;
+        ingameChannel.TriggerResurrect(ResurrectionKeys);
+        SaveManager.Save();
     }
     public void GoToMenu()
     {
@@ -109,10 +119,12 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
     public void LoadData(GameData data)
     {
         Coins = data.coins;
+        ResurrectionKeys = data.resurrectionKeys;
     }
 
     public void FetchData(GameData data)
     {
         data.coins = Coins;
+        data.resurrectionKeys = ResurrectionKeys;
     }
 }

@@ -7,7 +7,7 @@ public class IngameChannel : ScriptableObject
 {
     public UnityEvent OnRestartGame;
     public UnityEvent OnGameOver;
-    public UnityEvent OnResurrect;
+    public UnityEvent<int> OnResurrect;
     public UnityEvent<bool> OnPause;
     public UnityEvent<int> OnCollectedCoin;
     public void TriggerPause(bool isPaused)
@@ -26,8 +26,8 @@ public class IngameChannel : ScriptableObject
     {
         OnRestartGame.Invoke();
     }
-    public void TriggerResurrect()
+    public void TriggerResurrect(int keysLeft)
     {
-        OnResurrect.Invoke();
+        OnResurrect.Invoke(keysLeft);
     }
 }

@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(MenuManager))]
 public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
@@ -10,9 +11,12 @@ public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
     public TMP_Text finalScoreText;
     public TMP_Text recordScoreText;
     public TMP_Text coinsText;
+    public TMP_Text resurrectionKeysText;
+    public Button resurrectButton;
     public int CurrentScore { get => (int)_currentScore; }
 
     private MenuManager menuManager;
+    private GameManager gameManager;
     private IngameChannel ingameChannel;
     private float _currentScore;
     private int recordScore;
@@ -23,6 +27,7 @@ public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
     private void Awake()
     {
         speed = FindFirstObjectByType<LevelManager>().levelSpeed / 2f;
+        gameManager = FindFirstObjectByType<GameManager>();
         menuManager = GetComponent<MenuManager>();
         var gameOverChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
@@ -36,29 +41,36 @@ public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
         if (isScoreStopped)
             return;
 
-        _currentScore += Time.deltaTime * speed;
+        _currentScore = Mathf.Clamp(_currentScore + Time.deltaTime * speed, 0, int.MaxValue);
         ingameScoreText.SetText($"Score: {CurrentScore}m");
     }
     private void OnGameOver()
     {
         isScoreStopped = true;
+        resurrectButton.interactable = gameManager.ResurrectionKeys >= gameManager.resurrectionKeysUsage;
         menuManager.OpenMenu("GameOver");
         finalScoreText.SetText($"Your score\n{CurrentScore}m");
         recordScoreText.SetText($"Record score\n{recordScore}");
     }
     public void LoadData(GameData data)
     {
-        recordScore = data.RecordScore;
+        recordScore = data.recordScore;
+        resurrectionKeysText.SetText($"Keys:\n{data.resurrectionKeys}");
     }
     private void OnCollectedCoin(int amount)
     {
         collectedCoins += amount;
         coinsText.SetText($"Coins: {collectedCoins}");
     }
+    private void OnResurrect(int keysLeft)
+    {
+        isScoreStopped = false;
+        resurrectionKeysText.SetText($"Keys:\n{keysLeft}");
+    }
     public void FetchData(GameData data)
     {
         if (CurrentScore > recordScore)
-            data.RecordScore = CurrentScore;
+            data.recordScore = CurrentScore;
     }
     private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
     {
@@ -66,7 +78,7 @@ public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
         {
             ingameChannel = operation.Result;
             ingameChannel.OnGameOver.AddListener(OnGameOver);
-            ingameChannel.OnResurrect.AddListener(() => isScoreStopped = false);
+            ingameChannel.OnResurrect.AddListener(OnResurrect);
             ingameChannel.OnPause.AddListener((isPaused) => isScoreStopped = isPaused);
             ingameChannel.OnCollectedCoin.AddListener(OnCollectedCoin);
         }

@@ -56,7 +56,7 @@ public class LevelManager : MonoBehaviour
     {
         isLevelPaused = isPaused;
     }
-    public void OnResurrect()
+    public void OnResurrect(int keysLeft)
     {
         Collider[] nearObstacles = Physics.OverlapSphere(activeLevelParts[0].transform.position, activeLevelParts[0].halfLength + 10, layerMask: LayerMask.GetMask("Obstacles"));
         foreach (Collider collider in nearObstacles)
