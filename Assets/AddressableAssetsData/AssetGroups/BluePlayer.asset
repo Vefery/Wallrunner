@@ -26,6 +26,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - Skin
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8579a3028b1d2534c9a087e0aaa04fa7
+    m_Address: Assets/SkinsData/BlueInfo.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}
   m_SchemaSet:

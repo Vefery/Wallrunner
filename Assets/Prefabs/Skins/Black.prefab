@@ -131,4 +131,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6528a10394b5b449ba9aca1c0dc0249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skinName: Black
+  skinInfo: {fileID: 11400000, guid: 9d8586f5cc0022f40ba49a0f229d62c4, type: 2}

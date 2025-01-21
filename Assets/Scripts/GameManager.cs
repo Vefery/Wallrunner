@@ -1,27 +1,22 @@
 using System;
-using System.Collections;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using MessagePack;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 [MessagePackObject]
 public class GameData
 {
-    private int _coins = 0;
     private int _recordScore = 0;
     [Key("primarySkin")]
     public string primarySkinName = "Black";
     [Key("coins")]
-    public int Coins
-    {
-        get => _coins;
-        set => _coins = Mathf.Clamp(value, 0, int.MaxValue);
-    }
+    public int coins = 0;
+    [Key("unlockedSkins")]
+    public List<string> unlockedSkins = new() { "Black" };
     [Key("recordScore")]
     public int RecordScore
     {
@@ -29,12 +24,19 @@ public class GameData
         set => _recordScore = Mathf.Clamp(value, 0, int.MaxValue);
     }
 }
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
 {
+    public int Coins
+    {
+        get => _coins;
+        set => _coins = Mathf.Clamp(value, 0, int.MaxValue);
+    }
     private AudioSource[] musicSources;
     private AudioSource[] soundSources;
     private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
     private IngameChannel ingameChannel;
+    [SerializeField]
+    private int _coins;
     private void Awake()
     {
         musicSources = GameObject.FindGameObjectsWithTag("MusicSource").Select(x => x.GetComponent<AudioSource>()).ToArray();
@@ -44,7 +46,10 @@ public class GameManager : MonoBehaviour
         gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
 
         UpdateSettings();
-        SaveManager.Setup(FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IObjectWithData>().ToArray());
+        SaveManager.Setup(
+            FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IDataLoader>().ToArray(),
+            FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IDataFetcher>().ToArray()
+            );
         SaveManager.Load();
     }
     private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
@@ -52,6 +57,7 @@ public class GameManager : MonoBehaviour
         if (operation.Status == AsyncOperationStatus.Succeeded)
         {
             ingameChannel = operation.Result;
+            ingameChannel.OnCollectedCoin.AddListener((value) => Coins += value);
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
@@ -98,5 +104,15 @@ public class GameManager : MonoBehaviour
     {
         if (ingameChannelOperation.IsValid())
             ingameChannelOperation.Release();
+    }
+
+    public void LoadData(GameData data)
+    {
+        Coins = data.coins;
+    }
+
+    public void FetchData(GameData data)
+    {
+        data.coins = Coins;
     }
 }

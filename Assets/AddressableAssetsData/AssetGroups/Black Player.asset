@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Black Player
   m_GUID: 37e0c5bae4c425047ab6c61c682df086
   m_SerializeEntries:
+  - m_GUID: 9d8586f5cc0022f40ba49a0f229d62c4
+    m_Address: Assets/SkinsData/BlackInfo.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b4005b24e8189d14289afdc6cb7e3720
     m_Address: Assets/Materials/Black.mat
     m_ReadOnly: 0

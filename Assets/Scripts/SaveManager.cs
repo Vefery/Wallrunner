@@ -7,12 +7,14 @@ using UnityEngine;
 public static class SaveManager
 {
     static string savePath = Path.Combine(Application.persistentDataPath, "SaveData");
-    static IObjectWithData[] objectsWithData;
+    static IDataLoader[] dataLoaders;
+    static IDataFetcher[] dataFetchers;
     static private GameData gameData;
 
-    static public void Setup(IObjectWithData[] objects)
+    static public void Setup(IDataLoader[] loaders, IDataFetcher[] fetchers)
     {
-        objectsWithData = objects;
+        dataLoaders = loaders;
+        dataFetchers = fetchers;
     }
     static public void Load()
     {
@@ -24,12 +26,12 @@ public static class SaveManager
         else
             gameData = new();
 
-        foreach (IObjectWithData obj in objectsWithData)
+        foreach (IDataLoader obj in dataLoaders)
             obj.LoadData(gameData);
     }
     static public void Save()
     {
-        foreach (IObjectWithData obj in objectsWithData)
+        foreach (IDataFetcher obj in dataFetchers)
             obj.FetchData(gameData);
 
         using (FileStream stream = new(savePath, FileMode.Create))

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class PlayerController : MonoBehaviour, IObjectWithData
+public class PlayerController : MonoBehaviour, IDataLoader
 {
     public float jumpSpeed;
     public float swipeDeltaThreshold;
@@ -157,9 +157,5 @@ public class PlayerController : MonoBehaviour, IObjectWithData
             Debug.LogError("Failed to load player model!");
         if (operation.IsValid())
             operation.Release();
-    }
-    public void FetchData(GameData data)
-    {
-        data.primarySkinName = playerModelController.SkinName;
     }
 }

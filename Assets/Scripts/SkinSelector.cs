@@ -6,8 +6,21 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class SkinSelector : MonoBehaviour, IObjectWithData
+public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
 {
+    private struct SelectorSkinData
+    {
+        public GameObject skinObject;
+        public bool isUnlocked;
+        public SkinInfo info;
+        public SelectorSkinData(GameObject skinObject)
+        {
+            this.skinObject = skinObject;
+            isUnlocked = false;
+            info = skinObject.GetComponent<PlayerModelController>().skinInfo;
+        }
+    }
+
     [Header("Camera")]
     public Transform initialCameraPoint;
     public Transform skinSelectCameraPoint;
@@ -15,17 +28,23 @@ public class SkinSelector : MonoBehaviour, IObjectWithData
     public Transform skinsContainer;
     [Header("UI")]
     public TMP_Text coinsDisplay;
+    public GameObject confirmButton;
+    public GameObject buyButton;
 
     private Transform mainCamera;
     private Coroutine cameraTurnIEnumerator;
-    private List<GameObject> skins;
+    private GameManager gameManager;
+    private TMP_Text priceText;
+    private List<SelectorSkinData> skins;
     private int index;
     private int maxIndex;
     private string primarySkinName;
-    private int coins;
+    private List<string> unlockedSkins;
     private void Awake()
     {
         mainCamera = Camera.main.transform;
+        gameManager = FindFirstObjectByType<GameManager>();
+        priceText = buyButton.GetComponentInChildren<TMP_Text>();
 
         AsyncOperationHandle<IList<GameObject>> loadBasePartsHandle = Addressables.LoadAssetsAsync<GameObject>("Skin");
         loadBasePartsHandle.Completed += OnLoadSkinsHandle_Completed;
@@ -42,30 +61,65 @@ public class SkinSelector : MonoBehaviour, IObjectWithData
         if (index == maxIndex)
             return;
 
-        skins[index].SetActive(false);
+        skins[index].skinObject.SetActive(false);
         index++;
-        skins[index].transform.position = Vector3.zero;
-        skins[index].SetActive(true);
+        skins[index].skinObject.transform.position = Vector3.zero;
+        skins[index].skinObject.SetActive(true);
+
+        UpdateMainButton();
     }
     public void PreviousSkin()
     {
         if (index == 0)
             return;
 
-        skins[index].SetActive(false);
+        skins[index].skinObject.SetActive(false);
         index--;
-        skins[index].transform.position = Vector3.zero;
-        skins[index].SetActive(true);
+        skins[index].skinObject.transform.position = Vector3.zero;
+        skins[index].skinObject.SetActive(true);
+
+        UpdateMainButton();
+    }
+    private void UpdateMainButton()
+    {
+        if (skins[index].isUnlocked)
+        {
+            confirmButton.SetActive(true);
+            buyButton.SetActive(false);
+        }
+        else
+        {
+            buyButton.SetActive(true);
+            confirmButton.SetActive(false);
+            priceText.SetText($"{skins[index].info.price}$");
+        }
     }
     public void Confirm()
     {
-        primarySkinName = skins[index].GetComponent<PlayerModelController>().SkinName;
+        primarySkinName = skins[index].info.skinName;
         SaveManager.Save();
 
         if (cameraTurnIEnumerator != null)
             StopCoroutine(cameraTurnIEnumerator);
 
         cameraTurnIEnumerator = StartCoroutine(TurnCamera(initialCameraPoint));
+    }
+    public void BuySkin()
+    {
+        SelectorSkinData skinData = skins[index];
+        if (gameManager.Coins >= skinData.info.price)
+        {
+            gameManager.Coins -= skinData.info.price;
+            coinsDisplay.SetText($"Coins: {gameManager.Coins}");
+            skinData.isUnlocked = true;
+
+            skins[index] = skinData;
+            unlockedSkins.Add(skins[index].info.skinName);
+
+            confirmButton.SetActive(true);
+            buyButton.SetActive(false);
+            SaveManager.Save();
+        }
     }
     private IEnumerator TurnCamera(Transform destination)
     {
@@ -93,33 +147,39 @@ public class SkinSelector : MonoBehaviour, IObjectWithData
     }
     private async UniTaskVoid SpawnSkins(IList<GameObject> skinPrefabs, AsyncOperationHandle<IList<GameObject>> skinsOperation)
     {
-        foreach (GameObject skinPrefab in skinPrefabs)
+        for (int i = 0; i < skinPrefabs.Count; i++)
         {
-            GameObject skin = Instantiate(skinPrefab, skinsContainer);
-            skin.SetActive(false);
-            skins.Add(skin);
-            if (skin.GetComponent<PlayerModelController>().SkinName == primarySkinName)
-                index = skins.IndexOf(skin);
+            GameObject skinObject = Instantiate(skinPrefabs[i], skinsContainer);
+            skinObject.SetActive(false);
+            SelectorSkinData skinData = new(skinObject);
+            if (skinData.info.skinName == primarySkinName)
+                index = i;
+            if (unlockedSkins.Contains(skinData.info.skinName))
+                skinData.isUnlocked = true;
+
+            skins.Add(skinData);
             await UniTask.Yield();
         }
         if (skinsOperation.IsValid())
             skinsOperation.Release();
 
-        GameObject primarySkin = skins[index];
+        GameObject primarySkin = skins[index].skinObject;
         primarySkin.transform.position = Vector3.zero;
         primarySkin.SetActive(true);
+        confirmButton.SetActive(true);
+        buyButton.SetActive(false);
     }
 
     public void LoadData(GameData data)
     {
         primarySkinName = data.primarySkinName;
-        coinsDisplay.SetText($"Coins: {data.Coins}");
-        coins = data.Coins;
+        unlockedSkins = data.unlockedSkins;
+        coinsDisplay.SetText($"Coins: {data.coins}");
     }
 
     public void FetchData(GameData data)
     {
         data.primarySkinName = primarySkinName;
-        data.Coins = coins;
+        data.unlockedSkins = unlockedSkins;
     }
 }

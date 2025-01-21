@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 [RequireComponent(typeof(MenuManager))]
-public class IngameUIHandler : MonoBehaviour, IObjectWithData
+public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
 {
     public TMP_Text ingameScoreText;
     public TMP_Text finalScoreText;
@@ -59,7 +59,6 @@ public class IngameUIHandler : MonoBehaviour, IObjectWithData
     {
         if (CurrentScore > recordScore)
             data.RecordScore = CurrentScore;
-        data.Coins += collectedCoins;
     }
     private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
     {
