@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using MessagePack;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.HDROutputUtils;
 
 [MessagePackObject]
 public class GameData
@@ -36,21 +39,21 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
     }
     public int resurrectionKeysUsage = 1;
 
-    private AudioSource[] musicSources;
-    private AudioSource[] soundSources;
+    private AudioMixer masterMixer;
     private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
+    private AsyncOperationHandle<AudioMixer> audioMixerOperation;
     private IngameChannel ingameChannel;
     [SerializeField]
     private int _coins;
     [SerializeField]
     private int _resurrectionKeys;
-    private void Awake()
+    private async void Awake()
     {
-        musicSources = GameObject.FindGameObjectsWithTag("MusicSource").Select(x => x.GetComponent<AudioSource>()).ToArray();
-        soundSources = GameObject.FindGameObjectsWithTag("SoundSource").Select(x => x.GetComponent<AudioSource>()).ToArray();
-
         var gameOverChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
+        var audioMizerHandle = Addressables.LoadAssetAsync<AudioMixer>("Assets/Sounds/MasterMixer.mixer");
+        audioMizerHandle.Completed += OnAudioMixerChannel_Completed;
+        await audioMizerHandle;
 
         UpdateSettings();
         SaveManager.Setup(
@@ -59,6 +62,18 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
             );
         SaveManager.Load();
     }
+
+    private void OnAudioMixerChannel_Completed(AsyncOperationHandle<AudioMixer> operation)
+    {
+        if (operation.Status == AsyncOperationStatus.Succeeded)
+        {
+            masterMixer = operation.Result;
+        }
+        else
+            Debug.LogError("Failed to load audio mixer!");
+        audioMixerOperation = operation;
+    }
+
     private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
     {
         if (operation.Status == AsyncOperationStatus.Succeeded)
@@ -94,12 +109,10 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
     }
     public void UpdateSettings()
     {
-        float musicVolume = PlayerPrefs.GetFloat("musicVolume", 1f);
-        float soundVolume = PlayerPrefs.GetFloat("soundsVolume", 1f);
-        foreach (AudioSource source in musicSources)
-            source.volume = musicVolume;
-        foreach (AudioSource source in soundSources)
-            source.volume = soundVolume;
+        float musicVolume = 80f * Mathf.Log10(PlayerPrefs.GetFloat("musicVolume", 1f));
+        float soundVolume = 80f * Mathf.Log10(PlayerPrefs.GetFloat("soundsVolume", 1f));
+        masterMixer.SetFloat("musicVolume", musicVolume);
+        masterMixer.SetFloat("soundsVolume", soundVolume);
         Application.targetFrameRate = Convert.ToBoolean(PlayerPrefs.GetInt("batterySaveMode", 1)) ? 30 : 60;
     }
     private void RestartLevel()
@@ -114,6 +127,9 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
     {
         if (ingameChannelOperation.IsValid())
             ingameChannelOperation.Release();
+
+        if (audioMixerOperation.IsValid())
+            audioMixerOperation.Release();
     }
 
     public void LoadData(GameData data)

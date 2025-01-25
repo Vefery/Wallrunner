@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SoundsRelated
+  m_EditorClassIdentifier: 
+  m_GroupName: SoundsRelated
+  m_GUID: 62aefc3b54fd2814d83814b7bb6529bd
+  m_SerializeEntries:
+  - m_GUID: 62868cf409af9b64f98dd04f468e17ff
+    m_Address: Assets/Sounds/Click.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 705697dc7e72cbe4d87ebf360dc847ad
+    m_Address: Assets/Sounds/IngameMusic.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9374ca27705113a45a050ae35fa5da76
+    m_Address: Assets/Sounds/MasterMixer.mixer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a96e56f7d3ce16e4790e7997d7ab8e25
+    m_Address: Assets/Sounds/MenuMusic.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c55211c0d5f63b645884e75ad71b7ca2
+    m_Address: Assets/Sounds/Purchase.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ecdd15df641105544a50460fef3c0e01
+    m_Address: Assets/Sounds/Collect.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b125302f5c43838469041264fe23598d, type: 2}
+    - {fileID: 11400000, guid: ab3608afa349a2d4a865b02b8d58035d, type: 2}
