@@ -67,13 +67,15 @@ public class LevelManager : MonoBehaviour
     private void UpdateLevelParts()
     {
         LevelPart lastPart = activeLevelParts.Last();
-        float lastHalfLength = lastPart.halfLength;
         Destroy(activeLevelParts[0].gameObject);
         activeLevelParts.RemoveAt(0);
-        upcomingPart.transform.localPosition = lastPart.transform.position + Vector3.forward * (lastHalfLength + upcomingPart.halfLength);
+        upcomingPart.transform.localPosition = lastPart.transform.position + Vector3.forward * (lastPart.halfLength + upcomingPart.halfLength);
         activeLevelParts.Add(upcomingPart);
+        lastPart = upcomingPart;
         firstPartHalfLength = activeLevelParts[0].halfLength;
         upcomingPart = Instantiate(RandomPartPrefab, levelPartBufferPosition.position, Quaternion.identity, transform).GetComponent<LevelPart>();
+        upcomingPart.lastTrajectoryElement = lastPart.lastTrajectoryElement;
+        upcomingPart.consequentForward = lastPart.consequentForward;
     }
     private void OnLoadBasePartsHandle_Completed(AsyncOperationHandle<IList<GameObject>> operation)
     {
@@ -82,6 +84,8 @@ public class LevelManager : MonoBehaviour
             isLevelPaused = false;
             levelPartPrefabs = operation.Result;
             upcomingPart = Instantiate(RandomPartPrefab, levelPartBufferPosition.position, Quaternion.identity, transform).GetComponent<LevelPart>();
+            upcomingPart.lastTrajectoryElement = activeLevelParts[2].lastTrajectoryElement;
+            upcomingPart.consequentForward = activeLevelParts[2].consequentForward;
         }
         else
             Debug.LogError("Failed to load base parts of the level!");

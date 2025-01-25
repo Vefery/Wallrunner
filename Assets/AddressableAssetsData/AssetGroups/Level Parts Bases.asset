@@ -15,8 +15,20 @@ MonoBehaviour:
   m_GroupName: Level Parts Bases
   m_GUID: 4e82d8928bd8434409c3a41c7455950a
   m_SerializeEntries:
+  - m_GUID: 0b41fc26ab633134f9984d45917c0537
+    m_Address: Assets/Prefabs/ShortPart_HoleOnRight.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BaseLevelParts
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4c236e61bf48cc148929a1c50f58476d
     m_Address: Assets/Prefabs/ShortPart.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BaseLevelParts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 791a283f590373d48a2dfab81e63cc42
+    m_Address: Assets/Prefabs/ShortPart_HoleOnLeft.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - BaseLevelParts

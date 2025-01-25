@@ -6,20 +6,29 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class LevelPart : MonoBehaviour
 {
+    [System.Serializable]
+    public struct ObstacleLine
+    {
+        public Transform rightSocket;
+        public Transform leftSocket;
+    }
+
     public float halfLength;
     public float width;
     public float coinSpacing;
     public LayerMask obstacleCheckMask;
-    public Transform[] levelSockets;
+    public int lastTrajectoryElement = 1;
+    public int consequentForward = 0;
+    public ObstacleLine[] levelSockets;
 
     private IList<GameObject> obstaclesPrefabs;
     private GameObject coinPrefab;
-    private bool[] freeSockets;
+    [SerializeField]
+    private int[] trajectory; 
     private GameObject RandomObstaclePrefab { get => obstaclesPrefabs[Random.Range(0, obstaclesPrefabs.Count)]; }
     private async void Awake()
     {
-        freeSockets = new bool[levelSockets.Length];
-        System.Array.Fill(freeSockets, true);
+        trajectory = new int[levelSockets.Length];
         AsyncOperationHandle<IList<GameObject>> loadBasePartsHandle = Addressables.LoadAssetsAsync<GameObject>("Obstacles");
         await loadBasePartsHandle;
         OnLoadObstaclesHandle_Completed(loadBasePartsHandle);
@@ -49,13 +58,17 @@ public class LevelPart : MonoBehaviour
     }
     private async UniTaskVoid SpawnCoins(AsyncOperationHandle<GameObject> operation)
     {
-        for (int i = 0; i < freeSockets.Length; i++)
+        for (int i = 0; i < trajectory.Length; i++)
         {
-            if (freeSockets[i])
+            if (trajectory[i] == -1)
             {
-                Instantiate(coinPrefab, levelSockets[i]);
-                Instantiate(coinPrefab, levelSockets[i]).transform.Translate(Vector3.forward * coinSpacing, Space.World);
-                Instantiate(coinPrefab, levelSockets[i]).transform.Translate(Vector3.back * coinSpacing, Space.World);
+                Instantiate(coinPrefab, levelSockets[i].leftSocket).transform.Translate(Vector3.forward * coinSpacing, Space.World);
+                Instantiate(coinPrefab, levelSockets[i].leftSocket).transform.Translate(Vector3.back * coinSpacing, Space.World);
+            } 
+            else
+            {
+                Instantiate(coinPrefab, levelSockets[i].rightSocket).transform.Translate(Vector3.forward * coinSpacing, Space.World);
+                Instantiate(coinPrefab, levelSockets[i].rightSocket).transform.Translate(Vector3.back * coinSpacing, Space.World);
             }
             await UniTask.Yield();
         }
@@ -65,13 +78,43 @@ public class LevelPart : MonoBehaviour
     }
     private async UniTaskVoid SpawnObstacles(AsyncOperationHandle<IList<GameObject>> operation)
     {
+        if (trajectory.Length == 0)
+            return;
+
+        trajectory[0] = lastTrajectoryElement;
+        if (Random.Range(0f, 1f) > 0.5f * Mathf.Pow(0.8f, consequentForward))
+        {
+            trajectory[0] *= -1;
+            consequentForward = 0;
+        }
+        for (int i = 1; i < trajectory.Length; i++)
+        {
+            trajectory[i] = trajectory[i - 1];
+            consequentForward++;
+            if ((trajectory[i] == 1 && levelSockets[i].rightSocket == null) || (trajectory[i] == -1 && levelSockets[i].leftSocket == null))
+            {
+                trajectory[i] *= -1;
+                consequentForward = 0;
+            }
+            else if (Random.Range(0f, 1f) > 0.5f * Mathf.Pow(0.75f, consequentForward))
+            {
+                if ((trajectory[i] == -1 && levelSockets[i].rightSocket != null) || (trajectory[i - 1] == 1 && levelSockets[i].leftSocket != null))
+                {
+                    trajectory[i] *= -1;
+                    consequentForward = 0;
+                }
+            }
+        }
+        lastTrajectoryElement = trajectory[trajectory.Length - 1];
+
+        await UniTask.Yield();
+
         for (int i = 0; i < levelSockets.Length; i++)
         {
-            if (Random.Range(0f, 1f) > 0.5f && !Physics.Raycast(levelSockets[i].position + levelSockets[i].forward * width - levelSockets[i].right * 7, levelSockets[i].right, 14, obstacleCheckMask))
-            {
-                freeSockets[i] = false;
-                Instantiate(RandomObstaclePrefab, levelSockets[i], instantiateInWorldSpace: false);
-            }
+            if (trajectory[i] == 1 && levelSockets[i].leftSocket)
+                Instantiate(RandomObstaclePrefab, levelSockets[i].leftSocket, instantiateInWorldSpace: false);
+            else if (trajectory[i] == -1 && levelSockets[i].rightSocket)
+                Instantiate(RandomObstaclePrefab, levelSockets[i].rightSocket, instantiateInWorldSpace: false);
             await UniTask.Yield();
         }
         obstaclesPrefabs = null;

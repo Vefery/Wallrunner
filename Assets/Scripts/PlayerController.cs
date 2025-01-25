@@ -60,10 +60,15 @@ public class PlayerController : MonoBehaviour, IDataLoader
         {
             if (!onRightWall)
             {
-                if (Physics.Raycast(transform.position, Vector3.right, out hit, 15, raycastLayerMask))
+                if (Physics.Raycast(transform.position, transform.right, out hit, 15, raycastLayerMask))
                 {
                     onRightWall = true;
-                    StartCoroutine(JumpCoroutine(hit.point - Vector3.right * playerCollider.radius));
+                    StartCoroutine(JumpCoroutine(hit.point - transform.right * playerCollider.radius));
+                }
+                else
+                {
+                    onRightWall = true;
+                    StartCoroutine(JumpCoroutine(transform.position + transform.right * (14 - 2 * playerCollider.radius)));
                 }
             }
         }
@@ -71,10 +76,15 @@ public class PlayerController : MonoBehaviour, IDataLoader
         {
             if (onRightWall)
             {
-                if (Physics.Raycast(transform.position, -Vector3.right, out hit, 15, raycastLayerMask))
+                if (Physics.Raycast(transform.position, -transform.right, out hit, 15, raycastLayerMask))
                 {
                     onRightWall = false;
-                    StartCoroutine(JumpCoroutine(hit.point + Vector3.right * playerCollider.radius));
+                    StartCoroutine(JumpCoroutine(hit.point + transform.right * playerCollider.radius));
+                }
+                else
+                {
+                    onRightWall = false;
+                    StartCoroutine(JumpCoroutine(transform.position + transform.right * (-14 + 2 * playerCollider.radius)));
                 }
             }
         }

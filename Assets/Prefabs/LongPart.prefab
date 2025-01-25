@@ -650,20 +650,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   halfLength: 35
   width: 14
-  coinSpacing: 4
+  coinSpacing: 2.75
   obstacleCheckMask:
     serializedVersion: 2
     m_Bits: 64
+  lastTrajectoryElement: 1
+  consequentForward: 0
   levelSockets:
-  - {fileID: 2174002180304228409}
-  - {fileID: 5650462249887042582}
-  - {fileID: 4770360610840885471}
-  - {fileID: 975782639609152778}
-  - {fileID: 4212841360666725236}
-  - {fileID: 4503806227296535017}
-  - {fileID: 2048304496354049275}
-  - {fileID: 9079265114754883547}
-  - {fileID: 4346606727716304560}
-  - {fileID: 7383974017086643449}
-  - {fileID: 3408355848516741078}
-  - {fileID: 6109227529277587053}
+  - rightSocket: {fileID: 2174002180304228409}
+    leftSocket: {fileID: 5650462249887042582}
+  - rightSocket: {fileID: 4770360610840885471}
+    leftSocket: {fileID: 975782639609152778}
+  - rightSocket: {fileID: 4212841360666725236}
+    leftSocket: {fileID: 4503806227296535017}
+  - rightSocket: {fileID: 2048304496354049275}
+    leftSocket: {fileID: 9079265114754883547}
+  - rightSocket: {fileID: 4346606727716304560}
+    leftSocket: {fileID: 7383974017086643449}
+  - rightSocket: {fileID: 3408355848516741078}
+    leftSocket: {fileID: 6109227529277587053}
+  trajectory: 
