@@ -10,24 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: LevelFillers
+  m_Name: Master Material
   m_EditorClassIdentifier: 
-  m_GroupName: LevelFillers
-  m_GUID: b1abdfe1700f880469eb5ce3ad837c11
+  m_GroupName: Master Material
+  m_GUID: 0b10d3b98d1f6a74cbaf0e8f8e90d921
   m_SerializeEntries:
-  - m_GUID: 165f1b62397e1e844bf95f605ca7333e
-    m_Address: Assets/Prefabs/CoinPrefab.prefab
+  - m_GUID: 0f34324becaa4494d83ef9332b5f940c
+    m_Address: Assets/Textures/EmissionColor.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8c8232bf5ad9ced499bf530bc63b1cfd
-    m_Address: Assets/Prefabs/CubeObstacle.prefab
+  - m_GUID: a180238dd167b6243ad664ab6a541b16
+    m_Address: Assets/Textures/Colors.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Obstacles
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d57784891971ede4088c867e60c2bc30
-    m_Address: Assets/Materials/Red.mat
+  - m_GUID: c8b72177e970c314bb88f3c6a56c771a
+    m_Address: Assets/Materials/MasterMaterial.mat
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -35,5 +34,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 6749ca04d68d52e43bf25ccc7f4cb5e0, type: 2}
-    - {fileID: 11400000, guid: ec71fa1277192374fa870c20b3b69d86, type: 2}
+    - {fileID: 11400000, guid: 2383702dd8725bf4fa3604cc72547167, type: 2}
+    - {fileID: 11400000, guid: abe886e9ec9adeb49a2cec7798191fd0, type: 2}

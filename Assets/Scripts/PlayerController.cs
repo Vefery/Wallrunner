@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
     public void TriggerRevertableGameOver()
     {
         ingameChannel.TriggerGameOver();
-        controls.Disable();
+        controls.Player.Disable();
         isDead = true;
     }
     public void AddCoin()
@@ -110,17 +110,17 @@ public class PlayerController : MonoBehaviour, IDataLoader
     {
         if (isPaused)
         {
-            controls.Disable();
+            controls.Player.Disable();
         }
         else
         {
-            controls.Enable();
+            controls.Player.Enable();
         }
         this.isPaused = isPaused;
     }
     private void OnRessurect(int keysLeft)
     {
-        controls.Enable();
+        controls.Player.Enable();
         isDead = false;
     }
     private void OnTouchMove(InputAction.CallbackContext context)

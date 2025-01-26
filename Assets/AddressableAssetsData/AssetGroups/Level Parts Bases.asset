@@ -15,11 +15,41 @@ MonoBehaviour:
   m_GroupName: Level Parts Bases
   m_GUID: 4e82d8928bd8434409c3a41c7455950a
   m_SerializeEntries:
+  - m_GUID: 04f39a9b4153c034aa34b6e8e0115f3c
+    m_Address: Assets/Models/DecorativePart2.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0887952e58ba394459f689ac7e4427b9
+    m_Address: Assets/Models/RunnablePartHole2.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0b41fc26ab633134f9984d45917c0537
     m_Address: Assets/Prefabs/ShortPart_HoleOnRight.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - BaseLevelParts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e15e4b6f00849741b37ed05f047d5e0
+    m_Address: Assets/Models/RunnablePart3.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 14492a47b3992cf4eb9ad7dd5e8e6084
+    m_Address: Assets/Models/RunnablePartLong2.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2067b0516f68ff44b834e97bc8b6fad2
+    m_Address: Assets/Models/RunnablePartLong1.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 491a4dd6dda59844c82e9bd95353e0fb
+    m_Address: Assets/Models/RunnablePartHole4.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4c236e61bf48cc148929a1c50f58476d
     m_Address: Assets/Prefabs/ShortPart.prefab
@@ -27,17 +57,57 @@ MonoBehaviour:
     m_SerializedLabels:
     - BaseLevelParts
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c92aaca13792de438501db55084b95c
+    m_Address: Assets/Models/DecorativePartLong1.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 791a283f590373d48a2dfab81e63cc42
     m_Address: Assets/Prefabs/ShortPart_HoleOnLeft.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - BaseLevelParts
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9a61ac3733386864ba8ed513f7541db9
+    m_Address: Assets/Models/RunnablePartHole3.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be7d052bc4da1ba4198c4a58957cd277
+    m_Address: Assets/Models/RunnablePartHole1.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1bda8742d2a51940a89c88cb6ea7edc
+    m_Address: Assets/Models/RunnablePart2.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4ee2ac3735466b4cb912dbe89dbb314
+    m_Address: Assets/Models/RunnablePart1.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6fc7315c3d5fb74d819d22a5711cc43
+    m_Address: Assets/Models/RunnablePartLong3.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: edcfdb802a3f97b4c9b4e37f8f4d8124
     m_Address: Assets/Prefabs/LongPart.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - BaseLevelParts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f59260e009df1fd46b6ad5632f1afcbf
+    m_Address: Assets/Models/DecorativePartLong2.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f8373bf938b854044b952b4cd916802f
+    m_Address: Assets/Models/DecorativePart1.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}

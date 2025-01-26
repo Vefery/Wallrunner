@@ -67,6 +67,14 @@ public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
         isScoreStopped = false;
         resurrectionKeysText.SetText($"Keys:\n{keysLeft}");
     }
+    private void OnPause(bool isPaused)
+    {
+        isScoreStopped = isPaused;
+        if (isPaused)
+            menuManager.OpenMenu("Pause");
+        else
+            menuManager.OpenMenu("GamePanel");
+    }
     public void FetchData(GameData data)
     {
         if (CurrentScore > recordScore)
@@ -79,7 +87,7 @@ public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
             ingameChannel = operation.Result;
             ingameChannel.OnGameOver.AddListener(OnGameOver);
             ingameChannel.OnResurrect.AddListener(OnResurrect);
-            ingameChannel.OnPause.AddListener((isPaused) => isScoreStopped = isPaused);
+            ingameChannel.OnPause.AddListener(OnPause);
             ingameChannel.OnCollectedCoin.AddListener(OnCollectedCoin);
         }
         else

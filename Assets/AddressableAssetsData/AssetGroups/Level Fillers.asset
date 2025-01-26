@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Level Fillers
+  m_EditorClassIdentifier: 
+  m_GroupName: Level Fillers
+  m_GUID: b1abdfe1700f880469eb5ce3ad837c11
+  m_SerializeEntries:
+  - m_GUID: 01c34095127c67c45b37f6dad55824fd
+    m_Address: Assets/Prefabs/Decorations/FanSmall.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 034544ae906597b46969874ab426f54b
+    m_Address: Assets/Prefabs/Decorations/SignJap1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1417be488ddcb4a41a5f8691b080bed2
+    m_Address: Assets/Prefabs/Decorations/WallGrid.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 165f1b62397e1e844bf95f605ca7333e
+    m_Address: Assets/Prefabs/CoinPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e987100c505fb9429ce1cfb4d70c5dc
+    m_Address: Assets/Prefabs/Decorations/Wire.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35c4095b5b3802c45b078153ec290af5
+    m_Address: Assets/Prefabs/Decorations/SignEng2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e7ee8f3eee77c94d940250054e72a2e
+    m_Address: Assets/Prefabs/Decorations/SignRus1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59b8b34e634b8b543a39caabd5696c02
+    m_Address: Assets/Models/RedIndicator.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 882e2dd3f0b53884a88c99faf19b5a59
+    m_Address: Assets/Prefabs/Decorations/Vent.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c8232bf5ad9ced499bf530bc63b1cfd
+    m_Address: Assets/Prefabs/SignObstacle1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Obstacles
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8eafb947c692f474aad7709ee27f1c78
+    m_Address: Assets/Prefabs/Decorations/PipeCorner.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c39f02cc5f10b844598da7a62e03cf31
+    m_Address: Assets/Prefabs/SignObstacle2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Obstacles
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c63a9bf97df7efe49a2a342af4ac7ebb
+    m_Address: Assets/Prefabs/Decorations/Pipe.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de48b881fcf6f7e41b91cb800d315d41
+    m_Address: Assets/Prefabs/Decorations/SignRus2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7df5fb544d83c642b6d9efc096d962b
+    m_Address: Assets/Prefabs/Decorations/SignJap2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec15797862394da43b2a939b948bdfc7
+    m_Address: Assets/Prefabs/PipeObstacle.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Obstacles
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f669e54b2d5663b4d9dc060a686ca4c0
+    m_Address: Assets/Prefabs/Decorations/FanBig.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd50c832db152d941aa2ec69886c1274
+    m_Address: Assets/Prefabs/Decorations/SignEng1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6749ca04d68d52e43bf25ccc7f4cb5e0, type: 2}
+    - {fileID: 11400000, guid: ec71fa1277192374fa870c20b3b69d86, type: 2}

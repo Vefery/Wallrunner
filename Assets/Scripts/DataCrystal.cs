@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using static UnityEngine.Rendering.HDROutputUtils;
 
-public class Coin : MonoBehaviour
+public class DataCrystal : MonoBehaviour
 {
     public float rotationSpeed = 1f;
     private AudioClip collectSound;
@@ -13,7 +13,7 @@ public class Coin : MonoBehaviour
 
     void Awake()
     {
-        transform.Rotate(Vector3.right, transform.position.z);
+        transform.Rotate(Vector3.forward, transform.position.z, Space.Self);
         AsyncOperationHandle<AudioClip> collectSoundHandle = Addressables.LoadAssetAsync<AudioClip>("Assets/Sounds/Collect.wav");
         collectSoundHandle.Completed += OnCollectSoundHandle_Completed;
         soundsSource = GameObject.FindGameObjectWithTag("SoundSource").GetComponent<AudioSource>();
@@ -31,7 +31,7 @@ public class Coin : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(Vector3.right, Time.deltaTime * rotationSpeed);
+        transform.Rotate(Vector3.forward, Time.deltaTime * rotationSpeed, Space.Self);
     }
     private void OnTriggerEnter(Collider other)
     {

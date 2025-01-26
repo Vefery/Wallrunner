@@ -19,6 +19,7 @@ public class Fps : MonoBehaviour
     {
         var style = new GUIStyle();
         style.fontSize = 50;
-        GUI.Label(new Rect(150, 40, 1000, 250), "FPS: " + Mathf.Round(count), style);
+        style.normal.textColor = Color.white;
+        GUI.Label(new Rect(150, 400, 1000, 250), "FPS: " + Mathf.Round(count), style);
     }
 }
