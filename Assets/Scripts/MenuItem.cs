@@ -12,9 +12,6 @@ public class MenuItem : MonoBehaviour
     private IMenuAppearModifier _menuAppearModifier;
     private void Awake()
     {
-        if (!isOpened)
-            gameObject.SetActive(false);
-
         if (appearModifier != null)
         {
             if (appearModifier is IMenuAppearModifier)
@@ -27,6 +24,9 @@ public class MenuItem : MonoBehaviour
                 Debug.LogError($"{appearModifier.name} is not a menu modifier!");
             }
         }
+
+        if (!isOpened)
+            gameObject.SetActive(false);
     }
     public void Open()
     {

@@ -27,10 +27,12 @@ public class MenuManager : MonoBehaviour
         AsyncOperationHandle<AudioClip> clickSoundHandle = Addressables.LoadAssetAsync<AudioClip>("Assets/Sounds/Click.wav");
         clickSoundHandle.Completed += OnClickSoundHandle_Completed;
 
+        // To setup effects on inactive menus
         foreach (MenuItem menuItem in menus)
         {
-            menuItem.gameObject.SetActive(true);
-            menuItem.gameObject.SetActive(false);
+            bool state = menuItem.gameObject.activeSelf;
+            menuItem.gameObject.SetActive(!state);
+            menuItem.gameObject.SetActive(state);
         }
     }
 
