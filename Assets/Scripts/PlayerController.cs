@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,6 +11,10 @@ public class PlayerController : MonoBehaviour, IDataLoader
     public float jumpSpeed;
     public float swipeDeltaThreshold;
     public LayerMask raycastLayerMask;
+    public Action onJump;
+    public Action onLanded;
+    public Action onAliveStateChanged;
+    public Action<bool> onAnimationPause;
 
     private PlayerModelController playerModelController;
     private Vector2 swipeDelta = Vector2.zero;
@@ -29,6 +34,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
         var ingameChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         ingameChannelHandle.Completed += OnLoadGameOverChannel_Completed;
         playerYlevel = transform.position.y;
+        Time.timeScale = 0.1f;
     }
     private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
     {
@@ -94,6 +100,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
         ingameChannel.TriggerGameOver();
         controls.Player.Disable();
         isDead = true;
+        onAliveStateChanged?.Invoke();
     }
     public void AddCoin()
     {
@@ -117,11 +124,13 @@ public class PlayerController : MonoBehaviour, IDataLoader
             controls.Player.Enable();
         }
         this.isPaused = isPaused;
+        onAnimationPause?.Invoke(isPaused);
     }
     private void OnRessurect(int keysLeft)
     {
         controls.Player.Enable();
         isDead = false;
+        onAliveStateChanged?.Invoke();
     }
     private void OnTouchMove(InputAction.CallbackContext context)
     {
@@ -129,6 +138,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
     }
     private IEnumerator JumpCoroutine(Vector3 destination)
     {
+        onJump?.Invoke();
         Vector3 startPoint = transform.position;
         float progress = 0f;
         isMidair = true;
@@ -142,6 +152,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
         }
         transform.position = destination;
         isMidair = false;
+        onLanded?.Invoke();
     }
     private void OnDestroy()
     {

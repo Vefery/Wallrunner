@@ -68,6 +68,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - BaseLevelParts
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d72d1606d0dff746aa169e3ddbfd9cb
+    m_Address: Assets/Materials/VerticalFog.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a61ac3733386864ba8ed513f7541db9
     m_Address: Assets/Models/RunnablePartHole3.fbx
     m_ReadOnly: 0

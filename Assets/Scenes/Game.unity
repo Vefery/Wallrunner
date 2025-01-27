@@ -165,7 +165,7 @@ Transform:
   m_GameObject: {fileID: 8447757}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.511, y: -1, z: 8.098748}
+  m_LocalPosition: {x: 6, y: -2.44, z: 8.098748}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -217,10 +217,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 1
+  m_Height: 4
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 2.92, z: 0}
 --- !u!114 &8447762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,6 +528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuName: GamePanel
   isOpened: 0
+  appearModifier: {fileID: 0}
   _label: 0
 --- !u!222 &124540175
 CanvasRenderer:
@@ -1033,7 +1034,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -1211,6 +1212,7 @@ GameObject:
   - component: {fileID: 387964766}
   - component: {fileID: 387964765}
   - component: {fileID: 387964767}
+  - component: {fileID: 387964768}
   m_Layer: 5
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -1228,7 +1230,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 337604114}
   - {fileID: 732724698}
@@ -1295,7 +1297,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuName: GameOver
   isOpened: 0
+  appearModifier: {fileID: 11400000, guid: 42d08229bf9c968419b31387c6ca77d6, type: 2}
   _label: 0
+--- !u!111 &387964768
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387964763}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 3f5b157a721107445b0c86252e2c84dd, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 3f5b157a721107445b0c86252e2c84dd, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -3304,6 +3324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuName: Pause
   isOpened: 0
+  appearModifier: {fileID: 11400000, guid: 42d08229bf9c968419b31387c6ca77d6, type: 2}
   _label: 0
 --- !u!114 &1606714726
 MonoBehaviour:

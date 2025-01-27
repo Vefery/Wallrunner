@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: WhitePlayer
+  m_Name: PurpleSkin
   m_EditorClassIdentifier: 
-  m_GroupName: WhitePlayer
+  m_GroupName: PurpleSkin
   m_GUID: 1e150c3f64d43944a8e2dcda6f9c8dfa
   m_SerializeEntries:
   - m_GUID: a176e669d475c374382b557222418c63
-    m_Address: Assets/SkinsData/WhiteInfo.asset
+    m_Address: Assets/SkinsData/PurpleInfo.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ae200a345e797b64dbc55d03996c9d02
-    m_Address: Assets/Prefabs/Skins/White.prefab
+    m_Address: Assets/Prefabs/Skins/PurpleRobot.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Skin

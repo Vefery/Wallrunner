@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
-  m_Name: WhitePlayer_ContentUpdateGroupSchema
+  m_Script: {fileID: 11500000, guid: ed8c9c46b0cef81438f8f2f6a2ea6820, type: 3}
+  m_Name: Magnify
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 11400000, guid: 899174d516e777c4c8296cafe7668e5d, type: 2}
-  m_StaticContent: 0
+  speed: 1
