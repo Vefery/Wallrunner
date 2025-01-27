@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour, IDataLoader
         var ingameChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         ingameChannelHandle.Completed += OnLoadGameOverChannel_Completed;
         playerYlevel = transform.position.y;
-        Time.timeScale = 0.1f;
     }
     private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
     {
@@ -175,7 +174,11 @@ public class PlayerController : MonoBehaviour, IDataLoader
             playerModelController = Instantiate(operation.Result, transform.position, Quaternion.identity, transform).GetComponent<PlayerModelController>();
         }
         else
-            Debug.LogError("Failed to load player model!");
+        {
+            Debug.LogError("Failed to load player model! Fallback to default");
+            var playerModelHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Skins/PurpleRobot.prefab");
+            playerModelHandle.Completed += OnLoadPlayerModel_Completed;
+        }
         if (operation.IsValid())
             operation.Release();
     }
