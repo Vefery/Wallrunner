@@ -9,18 +9,27 @@ using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
+using static GameData;
 
 [MessagePackObject]
 public class GameData
 {
+    [MessagePackObject]
+    public struct OwnedItemPair
+    {
+        [Key(0)]
+        public string name;
+        [Key(1)]
+        public int owned;
+    }
     [Key("recordScore")]
     public int recordScore = 0;
     [Key("primarySkin")]
     public string primarySkinName = "Default";
     [Key("coins")]
     public int coins = 0;
-    [Key("keys")]
-    public int resurrectionKeys = 0;
+    [Key("ownedItems")]
+    public List<OwnedItemPair> ownedItems = new();
     [Key("unlockedSkins")]
     public List<string> unlockedSkins = new() { "Default" };
 }
@@ -31,23 +40,23 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         get => _coins;
         set => _coins = Mathf.Clamp(value, 0, int.MaxValue);
     }
-    public int ResurrectionKeys
-    {
-        get => _resurrectionKeys;
-        set => _resurrectionKeys = Mathf.Clamp(value, 0, int.MaxValue);
-    }
     public int resurrectionKeysUsage = 1;
 
     private AudioMixer masterMixer;
     private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
     private AsyncOperationHandle<AudioMixer> audioMixerOperation;
     private IngameChannel ingameChannel;
+    private List<OwnedItemPair> ownedItems;
     [SerializeField]
     private int _coins;
-    [SerializeField]
-    private int _resurrectionKeys;
     private async void Awake()
     {
+        SaveManager.Setup(
+            FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IDataLoader>().ToArray(),
+            FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IDataFetcher>().ToArray()
+        );
+        SaveManager.Load();
+
         var gameOverChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
         var audioMizerHandle = Addressables.LoadAssetAsync<AudioMixer>("Assets/Sounds/MasterMixer.mixer");
@@ -55,11 +64,6 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         await audioMizerHandle;
 
         UpdateSettings();
-        SaveManager.Setup(
-            FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IDataLoader>().ToArray(),
-            FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IDataFetcher>().ToArray()
-            );
-        SaveManager.Load();
     }
 
     private void OnAudioMixerChannel_Completed(AsyncOperationHandle<AudioMixer> operation)
@@ -90,12 +94,46 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         ingameChannel.TriggerRestartGame();
         RestartLevel();
     }
+    public bool UseItem(string itemName, int quantity = 1)
+    {
+        bool succsess = false;
+        for (int i = 0; i < ownedItems.Count; i++)
+        {
+            if (ownedItems[i].name == itemName && ownedItems[i].owned >= quantity)
+            {
+                succsess = true;
+                OwnedItemPair pair = ownedItems[i];
+                pair.owned -= quantity;
+                if (pair.owned == 0)
+                    ownedItems.RemoveAt(i);
+                else
+                    ownedItems[i] = pair;
+                break;
+            }
+        }
+        return succsess;
+    }
+    public int GetItemQuantity(string itemName)
+    {
+        int quantity = 0;
+        for (int i = 0; i < ownedItems.Count; i++)
+        {
+            if (ownedItems[i].name == itemName)
+            {
+                quantity = ownedItems[i].owned;
+                break;
+            }
+        }
+        return quantity;
+    }
     public void Resurrect()
     {
-        ResurrectionKeys -= resurrectionKeysUsage;
-        resurrectionKeysUsage *= 2;
-        ingameChannel.TriggerResurrect(ResurrectionKeys);
-        SaveManager.Save();
+        if (UseItem("resurrectionKey", resurrectionKeysUsage))
+        {
+            resurrectionKeysUsage *= 2;
+            ingameChannel.TriggerResurrect(GetItemQuantity("resurrectionKey"));
+            SaveManager.Save();
+        }
     }
     public void GoToMenu()
     {
@@ -134,12 +172,12 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
     public void LoadData(GameData data)
     {
         Coins = data.coins;
-        ResurrectionKeys = data.resurrectionKeys;
+        ownedItems = data.ownedItems;
     }
 
     public void FetchData(GameData data)
     {
         data.coins = Coins;
-        data.resurrectionKeys = ResurrectionKeys;
+        data.ownedItems = ownedItems;
     }
 }

@@ -21,7 +21,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ae200a345e797b64dbc55d03996c9d02
-    m_Address: Assets/Prefabs/Skins/PurpleRobot.prefab
+    m_Address: Assets/Prefabs/Skins/Default.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Skin

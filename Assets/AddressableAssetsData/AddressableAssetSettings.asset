@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: c899ae0dd2bc0324daaaade312d9e700
   m_currentHash:
     serializedVersion: 2
-    Hash: 457fe8f0d9e7db1504f0f22959ceb7f8
+    Hash: 4a0778b6d689bc9c706f91bb6bedf0c4
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -64,6 +64,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 899174d516e777c4c8296cafe7668e5d, type: 2}
   - {fileID: 11400000, guid: f181e594c52ee024c92d47158788c6fa, type: 2}
   - {fileID: 11400000, guid: 79e6ba78857a72f4baf2952b0e606316, type: 2}
+  - {fileID: 11400000, guid: 56e1d09659359344db4c1dbb0546009c, type: 2}
   - {fileID: 11400000, guid: 64cd5778cd33e614e900d71bbf8c9142, type: 2}
   - {fileID: 11400000, guid: ed1755f34232a61498e6e24155434fd8, type: 2}
   - {fileID: 11400000, guid: 6f8fc70dadfa7b04b9f6ae04d8a0d8e4, type: 2}
@@ -112,6 +113,7 @@ MonoBehaviour:
     - BaseLevelParts
     - Obstacles
     - Skin
+    - ShopItem
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 83ec62eb6415df2439374b8c865361be, type: 2}
