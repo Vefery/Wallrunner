@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7b36519218a74745928e78a2553246c, type: 3}
-  m_Name: BlueInfo
+  m_Name: PurpleRobotInfo
   m_EditorClassIdentifier: 
-  skinName: Blue
-  price: 200
+  skinName: Default
+  price: 0

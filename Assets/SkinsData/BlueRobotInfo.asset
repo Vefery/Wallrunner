@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7b36519218a74745928e78a2553246c, type: 3}
-  m_Name: BlackInfo
+  m_Name: BlueRobotInfo
   m_EditorClassIdentifier: 
-  skinName: Black
-  price: 0
+  skinName: BlueRobot
+  price: 200

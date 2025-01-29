@@ -9,7 +9,6 @@ using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.HDROutputUtils;
 
 [MessagePackObject]
 public class GameData
@@ -17,13 +16,13 @@ public class GameData
     [Key("recordScore")]
     public int recordScore = 0;
     [Key("primarySkin")]
-    public string primarySkinName = "Black";
+    public string primarySkinName = "Default";
     [Key("coins")]
     public int coins = 0;
     [Key("keys")]
     public int resurrectionKeys = 0;
     [Key("unlockedSkins")]
-    public List<string> unlockedSkins = new() { "Black" };
+    public List<string> unlockedSkins = new() { "Default" };
 }
 public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
 {

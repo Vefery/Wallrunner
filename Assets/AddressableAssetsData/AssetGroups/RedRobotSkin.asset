@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Black Player
+  m_Name: RedRobotSkin
   m_EditorClassIdentifier: 
-  m_GroupName: Black Player
+  m_GroupName: RedRobotSkin
   m_GUID: 37e0c5bae4c425047ab6c61c682df086
   m_SerializeEntries:
   - m_GUID: 9d8586f5cc0022f40ba49a0f229d62c4
@@ -26,7 +26,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bd3052a9b88584d47a2fd125207f20a0
-    m_Address: Assets/Prefabs/Skins/Black.prefab
+    m_Address: Assets/Prefabs/Skins/RedRobot.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Skin

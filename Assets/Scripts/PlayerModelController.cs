@@ -5,16 +5,24 @@ public class PlayerModelController : MonoBehaviour
     public SkinInfo skinInfo;
     public Animator animator;
     private PlayerController playerController;
-    private Rigidbody[] bodies;
+    private Rigidbody[] ragdoll;
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
-        playerController.onJump += TriggerJumpAnimation;
-        playerController.onLanded += ResumeRunningAnimation;
-        playerController.onAliveStateChanged += ToggleRagdoll;
-        playerController.onAnimationPause += PauseAnimation;
-
-        bodies = GetComponentsInChildren<Rigidbody>();
+        if (playerController != null)
+        {
+            playerController.onJump += TriggerJumpAnimation;
+            playerController.onLanded += ResumeRunningAnimation;
+            playerController.onAliveStateChanged += ToggleRagdoll;
+            playerController.onAnimationPause += PauseAnimation;
+        }
+        animator.keepAnimatorStateOnDisable = true;
+        ragdoll = GetComponentsInChildren<Rigidbody>();
+    }
+    private void Start()
+    {
+        if (playerController == null)
+            animator.SetBool("Idle", true);
     }
     private void TriggerJumpAnimation()
     {
@@ -31,5 +39,7 @@ public class PlayerModelController : MonoBehaviour
     private void ToggleRagdoll()
     {
         animator.enabled = !animator.enabled;
+        foreach (Rigidbody body in ragdoll)
+            body.isKinematic = !body.isKinematic;
     }
 }

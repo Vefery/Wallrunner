@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: BluePlayer
+  m_Name: PurpleRobotSkin
   m_EditorClassIdentifier: 
-  m_GroupName: BluePlayer
-  m_GUID: b55b5101e7f88fb4d8feb50f4c389b3b
+  m_GroupName: PurpleRobotSkin
+  m_GUID: 1e150c3f64d43944a8e2dcda6f9c8dfa
   m_SerializeEntries:
-  - m_GUID: 22296605567d01d4dbb47c802c176e98
-    m_Address: Assets/Materials/Blue.mat
+  - m_GUID: a176e669d475c374382b557222418c63
+    m_Address: Assets/SkinsData/PurpleInfo.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7ae8368a4ca426a4f8a4c586937e3102
-    m_Address: Assets/Prefabs/Skins/Blue.prefab
+  - m_GUID: ae200a345e797b64dbc55d03996c9d02
+    m_Address: Assets/Prefabs/Skins/PurpleRobot.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Skin
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8579a3028b1d2534c9a087e0aaa04fa7
-    m_Address: Assets/SkinsData/BlueInfo.asset
+  - m_GUID: c13d3fcc7a213f3498bf90b812e0985e
+    m_Address: Assets/Materials/White.mat
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -35,5 +35,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 8954bf2da75ff4a4f80cd947631e043d, type: 2}
-    - {fileID: 11400000, guid: 91aa1656059c68f499019644ea420000, type: 2}
+    - {fileID: 11400000, guid: 0ddcd3ac0bd08c54690db67bb1ef1be3, type: 2}
+    - {fileID: 11400000, guid: 862397a4b2cfd8f47a1552fc6f6f4cb8, type: 2}
