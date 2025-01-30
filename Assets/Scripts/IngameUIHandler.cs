@@ -35,7 +35,7 @@ public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
     private void Start()
     {
         menuManager.OpenMenu("GamePanel");
-        resurrectionKeysText.SetText($"Keys:\n{gameManager.GetItemQuantity("resurrectionKey")}");
+        resurrectionKeysText.SetText($"Keys:\n{gameManager.ResurrectionKeys}");
     }
     private void Update()
     {
@@ -48,7 +48,7 @@ public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
     private void OnGameOver()
     {
         isScoreStopped = true;
-        resurrectButton.interactable = gameManager.GetItemQuantity("resurrectionKey") >= gameManager.resurrectionKeysUsage;
+        resurrectButton.interactable = gameManager.ResurrectionKeys >= gameManager.resurrectionKeysUsage;
         menuManager.OpenMenu("GameOver");
         finalScoreText.SetText($"Your score\n{CurrentScore}m");
         recordScoreText.SetText($"Record score\n{recordScore}");
