@@ -43,8 +43,8 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
     public int resurrectionKeysUsage = 1;
 
     private AudioMixer masterMixer;
-    private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
-    private AsyncOperationHandle<AudioMixer> audioMixerOperation;
+    private AsyncOperationHandle<IngameChannel> ingameChannelHandle;
+    private AsyncOperationHandle<AudioMixer> audioMixerHandle;
     private IngameChannel ingameChannel;
     private List<OwnedItemPair> ownedItems;
     [SerializeField]
@@ -57,11 +57,11 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         );
         SaveManager.Load();
 
-        var gameOverChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
-        gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
-        var audioMizerHandle = Addressables.LoadAssetAsync<AudioMixer>("Assets/Sounds/MasterMixer.mixer");
-        audioMizerHandle.Completed += OnAudioMixerChannel_Completed;
-        await audioMizerHandle;
+        ingameChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
+        ingameChannelHandle.Completed += OnLoadGameOverChannel_Completed;
+        audioMixerHandle = Addressables.LoadAssetAsync<AudioMixer>("Assets/Sounds/MasterMixer.mixer");
+        audioMixerHandle.Completed += OnAudioMixerChannel_Completed;
+        await audioMixerHandle;
 
         UpdateSettings();
     }
@@ -74,7 +74,6 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         }
         else
             Debug.LogError("Failed to load audio mixer!");
-        audioMixerOperation = operation;
     }
 
     private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
@@ -86,7 +85,6 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
-        ingameChannelOperation = operation;
     }
     public void RestartGame()
     {
@@ -162,11 +160,11 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
     }
     private void OnDestroy()
     {
-        if (ingameChannelOperation.IsValid())
-            ingameChannelOperation.Release();
+        if (ingameChannelHandle.IsValid())
+            ingameChannelHandle.Release();
 
-        if (audioMixerOperation.IsValid())
-            audioMixerOperation.Release();
+        if (audioMixerHandle.IsValid())
+            audioMixerHandle.Release();
     }
 
     public void LoadData(GameData data)

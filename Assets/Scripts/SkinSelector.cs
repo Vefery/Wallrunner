@@ -43,8 +43,8 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
     private int maxIndex;
     private string primarySkinName;
     private List<string> unlockedSkins;
-    private AsyncOperationHandle<AudioClip> clickSoundOperation;
-    private AsyncOperationHandle<AudioClip> purchaseSoundOperation;
+    private AsyncOperationHandle<AudioClip> clickSoundHandle;
+    private AsyncOperationHandle<AudioClip> purchaseSoundHandle;
 
     private void Awake()
     {
@@ -52,11 +52,13 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
         gameManager = FindFirstObjectByType<GameManager>();
         priceText = buyButton.GetComponentInChildren<TMP_Text>();
 
-        AsyncOperationHandle<IList<GameObject>> loadBasePartsHandle = Addressables.LoadAssetsAsync<GameObject>("Skin");
-        loadBasePartsHandle.Completed += OnLoadSkinsHandle_Completed;
-        AsyncOperationHandle<AudioClip> clickSoundHandle = Addressables.LoadAssetAsync<AudioClip>("Assets/Sounds/Click.wav");
+        AsyncOperationHandle<IList<GameObject>> skinsHandle = Addressables.LoadAssetsAsync<GameObject>("Skin");
+        skinsHandle.Completed += OnLoadSkinsHandle_Completed;
+
+        clickSoundHandle = Addressables.LoadAssetAsync<AudioClip>("Assets/Sounds/Click.wav");
         clickSoundHandle.Completed += OnClickSoundHandle_Completed;
-        AsyncOperationHandle<AudioClip> purchaseSoundHandle = Addressables.LoadAssetAsync<AudioClip>("Assets/Sounds/Purchase.wav");
+
+        purchaseSoundHandle = Addressables.LoadAssetAsync<AudioClip>("Assets/Sounds/Purchase.wav");
         purchaseSoundHandle.Completed += OnPurchaseSoundHandle_Completed;
     }
     public void SkinSelection(bool activate)
@@ -171,7 +173,6 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
         }
         else
             Debug.LogError("Failed to load UI sound!");
-        clickSoundOperation = operation;
     }
     private void OnPurchaseSoundHandle_Completed(AsyncOperationHandle<AudioClip> operation)
     {
@@ -181,7 +182,6 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
         }
         else
             Debug.LogError("Failed to load UI sound!");
-        purchaseSoundOperation = operation;
     }
     private async UniTaskVoid SpawnSkins(IList<GameObject> skinPrefabs, AsyncOperationHandle<IList<GameObject>> skinsOperation)
     {
@@ -222,9 +222,9 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
     }
     private void OnDestroy()
     {
-        if (clickSoundOperation.IsValid())
-            clickSoundOperation.Release();
-        if (purchaseSoundOperation.IsValid())
-            purchaseSoundOperation.Release();
+        if (clickSoundHandle.IsValid())
+            clickSoundHandle.Release();
+        if (purchaseSoundHandle.IsValid())
+            purchaseSoundHandle.Release();
     }
 }

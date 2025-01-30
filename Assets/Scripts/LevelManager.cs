@@ -24,11 +24,11 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        AsyncOperationHandle<IList<GameObject>> loadBasePartsHandle = Addressables.LoadAssetsAsync<GameObject>("BaseLevelParts");
-        loadBasePartsHandle.Completed += OnLoadBasePartsHandle_Completed;
+        levelPartsOperation = Addressables.LoadAssetsAsync<GameObject>("BaseLevelParts");
+        levelPartsOperation.Completed += OnLoadBasePartsHandle_Completed;
 
-        var gameOverChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
-        gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
+        ingameChannelOperation = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
+        ingameChannelOperation.Completed += OnLoadGameOverChannel_Completed;
     }
     private void Start()
     {
@@ -89,7 +89,6 @@ public class LevelManager : MonoBehaviour
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
-        levelPartsOperation = operation;
     }
     private void OnLoadGameOverChannel_Completed(AsyncOperationHandle<IngameChannel> operation)
     {
@@ -102,7 +101,6 @@ public class LevelManager : MonoBehaviour
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
-        ingameChannelOperation = operation;
     }
     private void OnDestroy()
     {

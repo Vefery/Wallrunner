@@ -23,14 +23,14 @@ public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
     private float speed = 0f;
     private bool isScoreStopped = false;
     private int collectedCoins = 0;
-    private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
+    private AsyncOperationHandle<IngameChannel> ingameChannelHandle;
     private void Awake()
     {
         speed = FindFirstObjectByType<LevelManager>().levelSpeed / 2f;
         gameManager = FindFirstObjectByType<GameManager>();
         menuManager = GetComponent<MenuManager>();
-        var gameOverChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
-        gameOverChannelHandle.Completed += OnLoadGameOverChannel_Completed;
+        ingameChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
+        ingameChannelHandle.Completed += OnLoadGameOverChannel_Completed;
     }
     private void Start()
     {
@@ -92,11 +92,10 @@ public class IngameUIHandler : MonoBehaviour, IDataLoader, IDataFetcher
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
-        ingameChannelOperation = operation;
     }
     private void OnDestroy()
     {
-        if (ingameChannelOperation.IsValid())
-            ingameChannelOperation.Release();
+        if (ingameChannelHandle.IsValid())
+            ingameChannelHandle.Release();
     }
 }

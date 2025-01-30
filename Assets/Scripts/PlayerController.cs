@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
     private Vector2 swipeDelta = Vector2.zero;
     private CapsuleCollider playerCollider;
     private TouchInput controls;
-    private AsyncOperationHandle<IngameChannel> ingameChannelOperation;
+    private AsyncOperationHandle<IngameChannel> ingameChannelHandle;
     private IngameChannel ingameChannel;
     private bool onRightWall = true;
     private bool isMidair = false;
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
     private void Awake()
     {
         playerCollider = GetComponent<CapsuleCollider>();
-        var ingameChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
+        ingameChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         ingameChannelHandle.Completed += OnLoadGameOverChannel_Completed;
         playerYlevel = transform.position.y;
     }
@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour, IDataLoader
         }
         else
             Debug.LogError("Failed to load base parts of the level!");
-        ingameChannelOperation = operation;
     }
     void Start()
     {
@@ -155,8 +154,8 @@ public class PlayerController : MonoBehaviour, IDataLoader
     }
     private void OnDestroy()
     {
-        if (ingameChannelOperation.IsValid())
-            ingameChannelOperation.Release();
+        if (ingameChannelHandle.IsValid())
+            ingameChannelHandle.Release();
     }
 
     public void LoadData(GameData data)

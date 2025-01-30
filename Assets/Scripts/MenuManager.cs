@@ -18,13 +18,13 @@ public class MenuManager : MonoBehaviour
     private Menulabel primaryLabel;
     private MenuItem[] menus;
     private AudioClip clickSound;
-    private AsyncOperationHandle<AudioClip> clickSoundOperation;
+    private AsyncOperationHandle<AudioClip> clickSoundHandle;
 
     private void Awake()
     {
         menus = FindObjectsByType<MenuItem>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList().Where(x => x.Label == primaryLabel).ToArray();
 
-        AsyncOperationHandle<AudioClip> clickSoundHandle = Addressables.LoadAssetAsync<AudioClip>("Assets/Sounds/Click.wav");
+        clickSoundHandle = Addressables.LoadAssetAsync<AudioClip>("Assets/Sounds/Click.wav");
         clickSoundHandle.Completed += OnClickSoundHandle_Completed;
 
         // To setup effects on inactive menus
@@ -44,7 +44,6 @@ public class MenuManager : MonoBehaviour
         }
         else
             Debug.LogError("Failed to load UI sound!");
-        clickSoundOperation = operation;
     }
 
     public void OpenMenu(string name)
@@ -91,7 +90,7 @@ public class MenuManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if (clickSoundOperation.IsValid())
-            clickSoundOperation.Release();
+        if (clickSoundHandle.IsValid())
+            clickSoundHandle.Release();
     }
 }
