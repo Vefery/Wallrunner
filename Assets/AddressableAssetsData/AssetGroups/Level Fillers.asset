@@ -55,6 +55,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87220e37eab4e3641a734608409c1929
+    m_Address: Assets/Models/Obstacle1.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 882e2dd3f0b53884a88c99faf19b5a59
     m_Address: Assets/Prefabs/Decorations/Vent.prefab
     m_ReadOnly: 0
@@ -71,6 +76,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9593c599fe6d1a54b9a427cf33a3a41e
+    m_Address: Assets/Models/Obstacle2.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c39f02cc5f10b844598da7a62e03cf31
     m_Address: Assets/Prefabs/SignObstacle2.prefab
     m_ReadOnly: 0
@@ -79,6 +89,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c63a9bf97df7efe49a2a342af4ac7ebb
     m_Address: Assets/Prefabs/Decorations/Pipe.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb6a91f600b24c94c80bfd44b1289379
+    m_Address: Assets/Models/DataCrystal.fbx
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

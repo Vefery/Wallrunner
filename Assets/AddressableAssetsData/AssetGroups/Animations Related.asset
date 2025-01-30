@@ -10,30 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: RedRobotSkin
+  m_Name: Animations Related
   m_EditorClassIdentifier: 
-  m_GroupName: RedRobotSkin
-  m_GUID: 37e0c5bae4c425047ab6c61c682df086
+  m_GroupName: Animations Related
+  m_GUID: 04b9f01c152d4544280fc914c2a348c1
   m_SerializeEntries:
-  - m_GUID: 69d691cc435f0f34f95110028d899bde
-    m_Address: Assets/Models/RedRobot.fbx
+  - m_GUID: 12af1d99b546e01439c07f9f2bfa51ae
+    m_Address: Assets/Animations/Idle.fbx
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9d8586f5cc0022f40ba49a0f229d62c4
-    m_Address: Assets/SkinsData/BlackInfo.asset
+  - m_GUID: 47cbe228f6ce74248a97abd4e4754b54
+    m_Address: Assets/Animations/Animations.fbx
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bd3052a9b88584d47a2fd125207f20a0
-    m_Address: Assets/Prefabs/Skins/RedRobot.prefab
+  - m_GUID: d39cac23b1a992e42af17dd2a089f7fc
+    m_Address: Assets/Animations/PlayerAnimatorController.controller
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Skin
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: a6ddeaba73af3fe4b86c22481184e8e5, type: 2}
-    - {fileID: 11400000, guid: c3aeb911ed38f144b99b7c17f472cffd, type: 2}
+    - {fileID: 11400000, guid: 586d2c6c85c28884bbd58ca2670b1b3b, type: 2}
+    - {fileID: 11400000, guid: 555717c59cd9eae4ca82302b20a1ef92, type: 2}

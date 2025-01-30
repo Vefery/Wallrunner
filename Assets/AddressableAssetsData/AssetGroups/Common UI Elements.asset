@@ -20,8 +20,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f5b157a721107445b0c86252e2c84dd
+    m_Address: Assets/MenuModifiers/MagnifyAnimation.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42d08229bf9c968419b31387c6ca77d6
+    m_Address: Assets/MenuModifiers/Magnify.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 46d5788921475b9409694ca524510430
     m_Address: Assets/Fonts/Xolonium-pn4D SDF.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a902394e555c45348bf7de6986a3acf2
+    m_Address: Assets/Fonts/Xolonium-pn4D.ttf
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

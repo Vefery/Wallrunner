@@ -26,8 +26,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - Skin
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c13d3fcc7a213f3498bf90b812e0985e
-    m_Address: Assets/Materials/White.mat
+  - m_GUID: fa578775b6693c148aab1ea7360175c1
+    m_Address: Assets/Models/PurpleRobot.fbx
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
