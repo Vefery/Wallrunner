@@ -128,9 +128,9 @@ public class ShopHandler : MonoBehaviour, IDataFetcher, IDataLoader
     public void UpdateUI()
     {
         itemIcon.sprite = shopItems[index].info.itemIcon;
-        priceText.SetText($"{shopItems[index].info.price}$");
+        priceText.SetText(shopItems[index].info.price.ToString());
         quantityDisplay.SetText($"Owned: {shopItems[index].quantity}");
-        coinsDisplay.SetText($"Coins: {gameManager.Coins}");
+        coinsDisplay.SetText(gameManager.Coins.ToString());
     }
     public void BuyItem()
     {
@@ -140,7 +140,7 @@ public class ShopHandler : MonoBehaviour, IDataFetcher, IDataLoader
         if (gameManager.Coins >= shopItem.info.price)
         {
             gameManager.Coins -= shopItem.info.price;
-            coinsDisplay.SetText($"Coins: {gameManager.Coins}");
+            coinsDisplay.SetText(gameManager.Coins.ToString());
             shopItem.quantity++;
             GameData.OwnedItemPair itemPair;
             itemPair.name = shopItem.info.itemName;
@@ -173,7 +173,7 @@ public class ShopHandler : MonoBehaviour, IDataFetcher, IDataLoader
     public void LoadData(GameData data)
     {
         ownedItems = data.ownedItems;
-        coinsDisplay.SetText($"Coins: {data.coins}");
+        coinsDisplay.SetText(data.coins.ToString());
     }
     private void OnDestroy()
     {

@@ -107,7 +107,7 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
         {
             buyButton.SetActive(true);
             confirmButton.SetActive(false);
-            priceText.SetText($"{skins[index].info.price}$");
+            priceText.SetText(skins[index].info.price.ToString());
         }
     }
     public void Confirm()
@@ -130,7 +130,7 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
         if (gameManager.Coins >= skinData.info.price)
         {
             gameManager.Coins -= skinData.info.price;
-            coinsDisplay.SetText($"Coins: {gameManager.Coins}");
+            coinsDisplay.SetText(gameManager.Coins.ToString());
             skinData.isUnlocked = true;
 
             skins[index] = skinData;
@@ -212,7 +212,7 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
     {
         primarySkinName = data.primarySkinName;
         unlockedSkins = data.unlockedSkins;
-        coinsDisplay.SetText($"Coins: {data.coins}");
+        coinsDisplay.SetText(data.coins.ToString());
     }
 
     public void FetchData(GameData data)

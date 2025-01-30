@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI Icons
+  m_EditorClassIdentifier: 
+  m_GroupName: UI Icons
+  m_GUID: f4926c20f00e8384e89f6cb555b3b09b
+  m_SerializeEntries:
+  - m_GUID: 046c169c73cd3bd46b544c901bce4dd1
+    m_Address: Assets/Textures/CancelIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 05c2c055846929145bf3afd2f0ced8d9
+    m_Address: Assets/Textures/HomeIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 05d46cb94c2562447b42034eebb5ff49
+    m_Address: Assets/Textures/SettingsIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 10339efd253ebe142a304e5e78ec4701
+    m_Address: Assets/Textures/ArrowIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1380bd296c7e0104ca39611f1d226e48
+    m_Address: Assets/Textures/BackIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d942062a5309054cb20da8e7e7cfb0b
+    m_Address: Assets/Textures/TickIcon_BG.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29ee787c0bce1884e9223a62306f5938
+    m_Address: Assets/Textures/CoinIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84686e984a87ab647b49b4a8dbb2591d
+    m_Address: Assets/Textures/SoundsIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98191e47c77383b469ebf615b77465d4
+    m_Address: Assets/Textures/TickIcon_FG.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9bd5bcf340262894fbbccff9b3dcf3ae
+    m_Address: Assets/Textures/ShopIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2180cd176810984ba62c1b65951d61c
+    m_Address: Assets/Textures/SkinIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b325cbc163d333b4091c686fc774584c
+    m_Address: Assets/Textures/DeathIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb5d32f654c363c4e87baf4006d97033
+    m_Address: Assets/Textures/PauseIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db15721fdeba3dc4fb9d8f5765316578
+    m_Address: Assets/Textures/TickIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e03466e5600f18647a10c5cb973556a9
+    m_Address: Assets/Textures/KeyIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f70ea3ef38dd9164db4d7c64668613d4
+    m_Address: Assets/Textures/MusicIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e6251cfc4bd4cc94fbbf7dfa775f8504, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a056e97972e74084fa14732a92ed4c6e, type: 2}
+    - {fileID: 11400000, guid: abdc2da05bec97444b91b22f9c31030a, type: 2}
