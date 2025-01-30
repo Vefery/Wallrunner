@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         get => _coins;
         set => _coins = Mathf.Clamp(value, 0, int.MaxValue);
     }
+    public int ResurrectionKeys { get => ownedItems[resurrectionKeyItemIndex].owned; }
     public int resurrectionKeysUsage = 1;
 
     private AudioMixer masterMixer;
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
     private AsyncOperationHandle<AudioMixer> audioMixerHandle;
     private IngameChannel ingameChannel;
     private List<OwnedItemPair> ownedItems;
+    private int resurrectionKeyItemIndex;
     [SerializeField]
     private int _coins;
     private async void Awake()
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
             FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IDataFetcher>().ToArray()
         );
         SaveManager.Load();
+        resurrectionKeyItemIndex = GetItemIndex("resurrectionKey");
 
         ingameChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         ingameChannelHandle.Completed += OnLoadGameOverChannel_Completed;
@@ -111,6 +114,21 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         }
         return succsess;
     }
+    public bool UseItem(int index, int quantity = 1)
+    {
+        bool succsess = false;
+        if (ownedItems[index].owned >= quantity)
+        {
+            succsess = true;
+            OwnedItemPair pair = ownedItems[index];
+            pair.owned -= quantity;
+            if (pair.owned == 0)
+                ownedItems.RemoveAt(index);
+            else
+                ownedItems[index] = pair;
+        }
+        return succsess;
+    }
     public int GetItemQuantity(string itemName)
     {
         int quantity = 0;
@@ -124,9 +142,22 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         }
         return quantity;
     }
+    private int GetItemIndex(string itemName)
+    {
+        int index = -1;
+        for (int i = 0; i < ownedItems.Count; i++)
+        {
+            if (ownedItems[i].name == itemName)
+            {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
     public void Resurrect()
     {
-        if (UseItem("resurrectionKey", resurrectionKeysUsage))
+        if (UseItem(resurrectionKeyItemIndex, resurrectionKeysUsage))
         {
             resurrectionKeysUsage *= 2;
             ingameChannel.TriggerResurrect(GetItemQuantity("resurrectionKey"));
