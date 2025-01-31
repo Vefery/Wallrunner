@@ -40,7 +40,16 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         get => _coins;
         set => _coins = Mathf.Clamp(value, 0, int.MaxValue);
     }
-    public int ResurrectionKeys { get => ownedItems[resurrectionKeyItemIndex].owned; }
+    public int ResurrectionKeys
+    {
+        get
+        {
+            if (resurrectionKeyItemIndex == -1)
+                return 0;
+            else
+                return ownedItems[resurrectionKeyItemIndex].owned;
+        }
+    }
     public int resurrectionKeysUsage = 1;
 
     private AudioMixer masterMixer;

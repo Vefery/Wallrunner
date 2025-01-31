@@ -20,11 +20,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 47cbe228f6ce74248a97abd4e4754b54
-    m_Address: Assets/Animations/Animations.fbx
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d39cac23b1a992e42af17dd2a089f7fc
     m_Address: Assets/Animations/PlayerAnimatorController.controller
     m_ReadOnly: 0

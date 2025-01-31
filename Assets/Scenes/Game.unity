@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ea4b464651eed448f1127fcffa9087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpSpeed: 5
+  jumpSpeed: 3.5
   swipeDeltaThreshold: 1.5
   raycastLayerMask:
     serializedVersion: 2
