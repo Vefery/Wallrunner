@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
     private AsyncOperationHandle<IngameChannel> ingameChannelHandle;
     private AsyncOperationHandle<GameObject>  playerModelHandle;
     private IngameChannel ingameChannel;
+    private Rigidbody rb;
     private bool onRightWall = true;
     private bool isMidair = false;
     private bool isDead = false;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
     private void Awake()
     {
         playerCollider = GetComponent<CapsuleCollider>();
+        rb = GetComponent<Rigidbody>();
         ingameChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         ingameChannelHandle.Completed += OnLoadGameOverChannel_Completed;
         playerYlevel = transform.position.y;
@@ -145,10 +147,10 @@ public class PlayerController : MonoBehaviour, IDataLoader
             progress += jumpSpeed * Time.deltaTime;
             Vector3 temp = Vector3.Lerp(startPoint, destination, progress);
             temp.y = -0.05f * (transform.position.x + startPoint.x) * (transform.position.x + destination.x) + playerYlevel;
-            transform.position = temp;
+            rb.MovePosition(temp);
             yield return null;
         }
-        transform.position = destination;
+        rb.MovePosition(destination);
         isMidair = false;
         onLanded?.Invoke();
     }
