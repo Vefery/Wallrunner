@@ -9,7 +9,6 @@ Library: D:\Hypercasual\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_gener
 --target-framework=NetFramework
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=D:\Hypercasual\Temp\Burst
---debug=Full
 --key-folder=D:/Programs/Unity Editors/6000.0.27f1/Editor/Data/PlaybackEngines/AndroidPlayer
 --decode-folder=D:\Hypercasual\Library\Burst
 --output=D:\Hypercasual\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated

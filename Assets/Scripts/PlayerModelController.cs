@@ -40,6 +40,9 @@ public class PlayerModelController : MonoBehaviour
     {
         animator.enabled = !animator.enabled;
         foreach (Rigidbody body in ragdoll)
+        {
             body.isKinematic = !body.isKinematic;
+            body.AddForce(playerController.GetComponent<Rigidbody>().linearVelocity * 100f, ForceMode.Force);
+        }
     }
 }
