@@ -34,7 +34,7 @@ public class ShopHandler : MonoBehaviour, IDataFetcher, IDataLoader
     private AudioClip clickSound;
     private AudioClip purchaseSound;
     private List<ShopItemData> shopItems;
-    private List<GameData.OwnedItemPair> ownedItems;
+    private Dictionary<string, GameData.OwnedItemPair> ownedItemsDict;
     private int index;
     private int maxIndex;
     private AsyncOperationHandle<AudioClip> clickSoundHandle;
@@ -93,11 +93,11 @@ public class ShopHandler : MonoBehaviour, IDataFetcher, IDataLoader
             ShopItemData data;
             data.info = itemsInfo[i];
             data.quantity = 0;
-            foreach (var item in ownedItems)
+            foreach (var item in ownedItemsDict)
             {
-                if (item.name == data.info.itemName)
+                if (item.Value.name == data.info.itemName)
                 {
-                    data.quantity = item.owned;
+                    data.quantity = item.Value.owned;
                     break;
                 }
             }
@@ -147,18 +147,11 @@ public class ShopHandler : MonoBehaviour, IDataFetcher, IDataLoader
             itemPair.owned = shopItem.quantity;
             if (itemPair.owned == 1)
             {
-                ownedItems.Add(itemPair);
+                ownedItemsDict.Add(itemPair.name, itemPair);
             } 
             else
             {
-                for (int i = 0; i < ownedItems.Count; i++)
-                {
-                    if (ownedItems[i].name == itemPair.name)
-                    {
-                        ownedItems[i] = itemPair;
-                        break;
-                    }
-                }
+                ownedItemsDict[itemPair.name] = itemPair;
             }
             shopItems[index] = shopItem;
             UpdateUI();
@@ -167,12 +160,12 @@ public class ShopHandler : MonoBehaviour, IDataFetcher, IDataLoader
     }
     public void FetchData(GameData data)
     {
-        data.ownedItems = ownedItems;
+        data.ownedItemsDict = ownedItemsDict;
     }
 
     public void LoadData(GameData data)
     {
-        ownedItems = data.ownedItems;
+        ownedItemsDict = data.ownedItemsDict;
         coinsDisplay.SetText(data.coins.ToString());
     }
     private void OnDestroy()

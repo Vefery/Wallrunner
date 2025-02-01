@@ -45,6 +45,7 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
     private List<string> unlockedSkins;
     private AsyncOperationHandle<AudioClip> clickSoundHandle;
     private AsyncOperationHandle<AudioClip> purchaseSoundHandle;
+    AsyncOperationHandle<IList<GameObject>> skinsHandle;
 
     private void Awake()
     {
@@ -52,7 +53,7 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
         gameManager = FindFirstObjectByType<GameManager>();
         priceText = buyButton.GetComponentInChildren<TMP_Text>();
 
-        AsyncOperationHandle<IList<GameObject>> skinsHandle = Addressables.LoadAssetsAsync<GameObject>("Skin");
+        skinsHandle = Addressables.LoadAssetsAsync<GameObject>("Skin");
         skinsHandle.Completed += OnLoadSkinsHandle_Completed;
 
         clickSoundHandle = Addressables.LoadAssetAsync<AudioClip>("Assets/Sounds/Click.wav");
@@ -160,7 +161,7 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
         {
             skins = new(operation.Result.Count);
             maxIndex = operation.Result.Count - 1;
-            SpawnSkins(operation.Result, operation).Forget();
+            SpawnSkins(operation.Result).Forget();
         }
         else
             Debug.LogError("Failed to load skins!");
@@ -183,7 +184,7 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
         else
             Debug.LogError("Failed to load UI sound!");
     }
-    private async UniTaskVoid SpawnSkins(IList<GameObject> skinPrefabs, AsyncOperationHandle<IList<GameObject>> skinsOperation)
+    private async UniTaskVoid SpawnSkins(IList<GameObject> skinPrefabs)
     {
         for (int i = 0; i < skinPrefabs.Count; i++)
         {
@@ -198,8 +199,6 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
             skins.Add(skinData);
             await UniTask.Yield();
         }
-        if (skinsOperation.IsValid())
-            skinsOperation.Release();
 
         GameObject primarySkin = skins[index].skinObject;
         primarySkin.transform.position = Vector3.zero;
@@ -226,5 +225,7 @@ public class SkinSelector : MonoBehaviour, IDataLoader, IDataFetcher
             clickSoundHandle.Release();
         if (purchaseSoundHandle.IsValid())
             purchaseSoundHandle.Release();
+        if (skinsHandle.IsValid())
+            skinsHandle.Release();
     }
 }

@@ -28,8 +28,8 @@ public class GameData
     public string primarySkinName = "Default";
     [Key("coins")]
     public int coins = 0;
-    [Key("ownedItems")]
-    public List<OwnedItemPair> ownedItems = new();
+    [Key("ownedItemsDict")]
+    public Dictionary<string, OwnedItemPair> ownedItemsDict = new();
     [Key("unlockedSkins")]
     public List<string> unlockedSkins = new() { "Default" };
 }
@@ -40,24 +40,13 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
         get => _coins;
         set => _coins = Mathf.Clamp(value, 0, int.MaxValue);
     }
-    public int ResurrectionKeys
-    {
-        get
-        {
-            if (resurrectionKeyItemIndex == -1)
-                return 0;
-            else
-                return ownedItems[resurrectionKeyItemIndex].owned;
-        }
-    }
     public int resurrectionKeysUsage = 1;
 
     private AudioMixer masterMixer;
     private AsyncOperationHandle<IngameChannel> ingameChannelHandle;
     private AsyncOperationHandle<AudioMixer> audioMixerHandle;
     private IngameChannel ingameChannel;
-    private List<OwnedItemPair> ownedItems;
-    private int resurrectionKeyItemIndex;
+    private Dictionary<string, OwnedItemPair> ownedItemsDict = new();
     [SerializeField]
     private int _coins;
     private async void Awake()
@@ -67,7 +56,6 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
             FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IDataFetcher>().ToArray()
         );
         SaveManager.Load();
-        resurrectionKeyItemIndex = GetItemIndex("resurrectionKey");
 
         ingameChannelHandle = Addressables.LoadAssetAsync<IngameChannel>("Assets/EventChannels/Ingame Channel.asset");
         ingameChannelHandle.Completed += OnLoadGameOverChannel_Completed;
@@ -107,66 +95,31 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
     public bool UseItem(string itemName, int quantity = 1)
     {
         bool succsess = false;
-        for (int i = 0; i < ownedItems.Count; i++)
+        if (ownedItemsDict.TryGetValue(itemName, out OwnedItemPair item))
         {
-            if (ownedItems[i].name == itemName && ownedItems[i].owned >= quantity)
+            if (item.owned >= quantity)
             {
                 succsess = true;
-                OwnedItemPair pair = ownedItems[i];
-                pair.owned -= quantity;
-                if (pair.owned == 0)
-                    ownedItems.RemoveAt(i);
+                item.owned -= quantity;
+                if (item.owned == 0)
+                    ownedItemsDict.Remove(itemName);
                 else
-                    ownedItems[i] = pair;
-                break;
+                    ownedItemsDict[itemName] = item;
             }
         }
-        return succsess;
-    }
-    public bool UseItem(int index, int quantity = 1)
-    {
-        bool succsess = false;
-        if (ownedItems[index].owned >= quantity)
-        {
-            succsess = true;
-            OwnedItemPair pair = ownedItems[index];
-            pair.owned -= quantity;
-            if (pair.owned == 0)
-                ownedItems.RemoveAt(index);
-            else
-                ownedItems[index] = pair;
-        }
+
         return succsess;
     }
     public int GetItemQuantity(string itemName)
     {
-        int quantity = 0;
-        for (int i = 0; i < ownedItems.Count; i++)
-        {
-            if (ownedItems[i].name == itemName)
-            {
-                quantity = ownedItems[i].owned;
-                break;
-            }
-        }
-        return quantity;
-    }
-    private int GetItemIndex(string itemName)
-    {
-        int index = -1;
-        for (int i = 0; i < ownedItems.Count; i++)
-        {
-            if (ownedItems[i].name == itemName)
-            {
-                index = i;
-                break;
-            }
-        }
-        return index;
+        if (ownedItemsDict.TryGetValue(itemName, out OwnedItemPair item))
+            return item.owned;
+        else
+            return 0;
     }
     public void Resurrect()
     {
-        if (UseItem(resurrectionKeyItemIndex, resurrectionKeysUsage))
+        if (UseItem("resurrectionKey", resurrectionKeysUsage))
         {
             resurrectionKeysUsage *= 2;
             ingameChannel.TriggerResurrect(GetItemQuantity("resurrectionKey"));
@@ -210,12 +163,12 @@ public class GameManager : MonoBehaviour, IDataLoader, IDataFetcher
     public void LoadData(GameData data)
     {
         Coins = data.coins;
-        ownedItems = data.ownedItems;
+        ownedItemsDict = data.ownedItemsDict;
     }
 
     public void FetchData(GameData data)
     {
         data.coins = Coins;
-        data.ownedItems = ownedItems;
+        data.ownedItemsDict = ownedItemsDict;
     }
 }

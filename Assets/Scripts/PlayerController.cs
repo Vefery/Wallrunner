@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -21,6 +20,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
     private CapsuleCollider playerCollider;
     private TouchInput controls;
     private AsyncOperationHandle<IngameChannel> ingameChannelHandle;
+    private AsyncOperationHandle<GameObject>  playerModelHandle;
     private IngameChannel ingameChannel;
     private bool onRightWall = true;
     private bool isMidair = false;
@@ -156,6 +156,8 @@ public class PlayerController : MonoBehaviour, IDataLoader
     {
         if (ingameChannelHandle.IsValid())
             ingameChannelHandle.Release();
+        if (playerModelHandle.IsValid())
+            playerModelHandle.Release();
     }
 
     public void LoadData(GameData data)
@@ -163,7 +165,7 @@ public class PlayerController : MonoBehaviour, IDataLoader
         if (playerModelController != null)
             return;
 
-        var playerModelHandle = Addressables.LoadAssetAsync<GameObject>($"Assets/Prefabs/Skins/{data.primarySkinName}.prefab");
+        playerModelHandle = Addressables.LoadAssetAsync<GameObject>($"Assets/Prefabs/Skins/{data.primarySkinName}.prefab");
         playerModelHandle.Completed += OnLoadPlayerModel_Completed;
     }
     private void OnLoadPlayerModel_Completed(AsyncOperationHandle<GameObject> operation)
@@ -178,7 +180,6 @@ public class PlayerController : MonoBehaviour, IDataLoader
             var playerModelHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Skins/PurpleRobot.prefab");
             playerModelHandle.Completed += OnLoadPlayerModel_Completed;
         }
-        if (operation.IsValid())
-            operation.Release();
     }
+    
 }
