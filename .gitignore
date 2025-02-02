@@ -75,4 +75,7 @@ crashlytics-build.properties
 # Custom
 .utmp/
 Hypercasual_BurstDebugInformation_DoNotShip/
+Wallrunner_BurstDebugInformation_DoNotShip/
 *.keystore
+*.blend
+*.blend1
