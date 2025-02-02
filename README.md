@@ -11,7 +11,11 @@
 ## Описание игры
 Традиционный бесконечный раннер в сеттинге далекого будущего. Главный герой бежит по стенам и уклоняется от препятствий, прыгая между стенами соседних домов. Цель игры – побить свой рекорд и собрать кристаллы данных (валюта). Кристаллы данных можно использовать для покупки скинов и предметов в магазине.
 ## Скриншоты
-TODO
+![Screenshot_2025-02-02-18-04-22-138_com VeferyDev Wallrunner](https://github.com/user-attachments/assets/377b7b76-28e1-4ea5-a91a-7c69e851f900)<br>
+![Screenshot_2025-02-02-18-04-32-884_com VeferyDev Wallrunner](https://github.com/user-attachments/assets/3f2eb926-19b5-4f88-b341-7c06a4a71961)<br>
+![Screenshot_2025-02-02-18-06-25-339_com VeferyDev Wallrunner](https://github.com/user-attachments/assets/4d9ca80d-1da1-4364-999d-1e038475fabf)<br>
+![Screenshot_2025-02-02-18-06-44-657_com VeferyDev Wallrunner](https://github.com/user-attachments/assets/994b3d30-b52a-47bf-8cc7-140ad808d206)<br>
+![Screenshot_2025-02-02-18-07-23-224_com VeferyDev Wallrunner](https://github.com/user-attachments/assets/e545b918-bf93-43be-abd9-c020008e43d5)<br>
 ## Credit
 - Большенство UI иконок, [SunGraphica](https://sungraphica.itch.io)
 - Базовая модель персонажа, [Daniel Darko](https://sketchfab.com/danieldarko)
@@ -31,7 +35,11 @@ This game was created to showcase my game development skills in Unity engine. An
 ## Game description
 This is a traditional endless runner set in distant future. The main character runs on walls of buildings and avoids various obstacles by jumping between the walls of opposite buildings. The main goal is to beat your records and collect data crystals (currency). Data crystals can be used to buy skins and items in the shop.
 ## Screenshots
-TODO
+![Screenshot_2025-02-02-18-04-22-138_com VeferyDev Wallrunner](https://github.com/user-attachments/assets/377b7b76-28e1-4ea5-a91a-7c69e851f900)<br>
+![Screenshot_2025-02-02-18-04-32-884_com VeferyDev Wallrunner](https://github.com/user-attachments/assets/3f2eb926-19b5-4f88-b341-7c06a4a71961)<br>
+![Screenshot_2025-02-02-18-06-25-339_com VeferyDev Wallrunner](https://github.com/user-attachments/assets/4d9ca80d-1da1-4364-999d-1e038475fabf)<br>
+![Screenshot_2025-02-02-18-06-44-657_com VeferyDev Wallrunner](https://github.com/user-attachments/assets/994b3d30-b52a-47bf-8cc7-140ad808d206)<br>
+![Screenshot_2025-02-02-18-07-23-224_com VeferyDev Wallrunner](https://github.com/user-attachments/assets/e545b918-bf93-43be-abd9-c020008e43d5)<br>
 ## Credit
 - Most UI icons by [SunGraphica](https://sungraphica.itch.io)
 - Base character model by [Daniel Darko](https://sketchfab.com/danieldarko)
