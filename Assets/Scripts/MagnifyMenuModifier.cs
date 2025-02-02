@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Menu Modifiers/Magnify")]
@@ -11,7 +10,6 @@ public class MagnifyMenuModifier : ScriptableObject, IMenuAppearModifier
         animation.clip = clip;
         animation.Play();
     }
-
     public void Setup(GameObject menuPanel)
     {
         animation = menuPanel.AddComponent<Animation>();
